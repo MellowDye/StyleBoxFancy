@@ -1,8 +1,8 @@
 @tool
 extends EditorPlugin
 
-const InspectorPlugin = preload("res://addons/StyleboxFancy/inspector/inspector_plugin.gd")
-const StyleBoxFancyConverter = preload("res://addons/StyleboxFancy/styleboxfancy_converter.gd")
+const InspectorPlugin = preload("uid://b1yas08a5nx6o")
+const StyleBoxFancyConverter = preload("uid://flio81hb670j")
 
 var converter = StyleBoxFancyConverter.new()
 var inspector_plugin = InspectorPlugin.new()
@@ -14,15 +14,15 @@ func _enter_tree():
 	add_custom_type(
 		"StyleBoxFancy",
 		"StyleBox",
-		preload("res://addons/StyleboxFancy/StyleBoxFancy.gd"),
-		preload("res://addons/StyleboxFancy/StyleBoxFancy.svg")
+		preload("uid://bkl6g25jwb47h"),
+		preload("uid://ds1a2dtd5mvjg")
 	)
 
 	add_custom_type(
 		"StyleBorder",
 		"Resource",
-		preload("res://addons/StyleboxFancy/StyleBorder.gd"),
-		preload("res://addons/StyleboxFancy/StyleBorder.svg")
+		preload("uid://cjmmhbp1b5312"),
+		preload("uid://bvvu8c56q60gy")
 	)
 
 func _exit_tree():

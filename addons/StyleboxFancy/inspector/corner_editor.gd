@@ -1,6 +1,6 @@
 extends EditorProperty
 
-const CORNER_EDITOR_CONTAINER = preload("res://addons/StyleboxFancy/inspector/corner editor container/corner_editor_container.tscn")
+const CORNER_EDITOR_CONTAINER = preload("uid://df2kverp315t8")
 
 var controls: CornerEditorContainer = CORNER_EDITOR_CONTAINER.instantiate()
 

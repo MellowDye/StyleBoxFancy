@@ -1,6 +1,6 @@
 extends EditorInspectorPlugin
 
-const CornerEditor = preload("res://addons/StyleboxFancy/inspector/corner_editor.gd")
+const CornerEditor = preload("uid://c0j12lafuf8qy")
 
 func _can_handle(object: Object):
 	return object is StyleBoxFancy
