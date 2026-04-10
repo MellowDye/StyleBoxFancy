@@ -24,6 +24,12 @@ const Curvatures = {
 	"Notch" = -7.0
 }
 
+enum TextureScaleMode {
+	SCALE,
+	TILE,
+	KEEP
+}
+
 # Used to save each corner's geometry that is reused for each rounded rect generated
 # as it is scaled depending on the corner radius
 var _corner_geometry: Array[PackedVector2Array]
@@ -41,7 +47,19 @@ var _corner_geometry: Array[PackedVector2Array]
 	set(v):
 		texture = v
 		emit_changed()
-
+		
+## Whether the texture should scale, tile, or clamp to center.
+@export var repeat: TextureScaleMode:
+	set(v):
+		repeat = v
+		emit_changed()
+		
+## Whether the texture should scale, tile, or clamp to center.
+@export var texture_scale: float = 1.0:
+	set(v):
+		texture_scale = v
+		emit_changed()
+		
 ## Toggles drawing the center of this stylebox.
 @export var draw_center: bool = true:
 	set(v):
@@ -393,7 +411,7 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 			indices,
 			all_points,
 			colors,
-			_get_polygon_uv(all_points, texture_rect),
+			_get_polygon_uv_scale(all_points, texture_rect),
 			PackedInt32Array(),
 			PackedFloat32Array(),
 			ring_texture.get_rid()
@@ -413,7 +431,7 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 	# Simple rect check
 	if not corner_radius and not force_aa:
 		if rect_texture:
-			RenderingServer.canvas_item_add_texture_rect(to_canvas_item, rect, rect_texture.get_rid(), false, rect_color)
+			RenderingServer.canvas_item_add_texture_rect(to_canvas_item, rect, rect_texture.get_rid(), true, rect_color)
 		else:
 			RenderingServer.canvas_item_add_rect(to_canvas_item, rect, rect_color)
 		return
@@ -449,11 +467,21 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 	var points: PackedVector2Array = _get_rounded_rect(center_rect, center_corner_radius)
 
 	if rect_texture != null:
+		var uvs : PackedVector2Array
+		if repeat == TextureScaleMode.SCALE:
+			uvs = _get_polygon_uv_scale(points, rect)
+		elif repeat == TextureScaleMode.TILE:
+			uvs = _get_polygon_uv_tiled(points, rect, rect_texture, texture_scale)
+			RenderingServer.canvas_item_set_default_texture_repeat(to_canvas_item, RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
+		elif repeat == TextureScaleMode.KEEP:
+			RenderingServer.canvas_item_set_default_texture_repeat(to_canvas_item, RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_DISABLED)
+			uvs = _get_polygon_uv_centered(points, rect, rect_texture)
+		
 		RenderingServer.canvas_item_add_polygon(
 			to_canvas_item,
 			points,
 			[rect_color],
-			_get_polygon_uv(points, rect),
+			uvs,
 			rect_texture.get_rid()
 		)
 	else:
@@ -696,13 +724,41 @@ func _adjust_corner_radius(corner_radius: Vector4, sides_width: Vector4, grow: b
 		)
 
 
-func _get_polygon_uv(polygon: PackedVector2Array, rect: Rect2) -> PackedVector2Array:
+func _get_polygon_uv_scale(polygon: PackedVector2Array, rect: Rect2) -> PackedVector2Array:
 	var uv: PackedVector2Array
 	uv.resize(polygon.size())
 	for point_idx in polygon.size():
 		uv[point_idx] = (polygon[point_idx] - rect.position) / rect.size
 	return uv
 
+func _get_polygon_uv_tiled(
+		polygon: PackedVector2Array,
+		rect: Rect2,
+		texture: Texture2D,
+		tile_scale: float = 1.0
+	) -> PackedVector2Array:
+	var uv: PackedVector2Array
+	uv.resize(polygon.size())
+	var tex_size: Vector2 = texture.get_size()
+	for i in polygon.size():
+		var local_pos: Vector2 = polygon[i] - rect.position
+		uv[i] = local_pos / (tex_size * tile_scale)
+	return uv
+	
+func _get_polygon_uv_centered(
+		polygon: PackedVector2Array,
+		rect: Rect2,
+		texture: Texture2D
+	) -> PackedVector2Array:
+	var uv: PackedVector2Array
+	uv.resize(polygon.size())
+	var tex_size: Vector2 = texture.get_size()
+	var rect_center: Vector2 = rect.size * 0.5
+	for i in polygon.size():
+		var local_pos: Vector2 = polygon[i] - rect.position
+		var centered_pos: Vector2 = local_pos - rect_center + tex_size * 0.5
+		uv[i] = centered_pos / tex_size
+	return uv
 
 func _fit_corner_radius_in_rect(corners: Vector4, rect: Rect2) -> Vector4:
 	var adjusted: Vector4
