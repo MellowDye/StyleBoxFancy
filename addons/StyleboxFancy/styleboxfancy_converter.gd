@@ -22,19 +22,23 @@ func _convert(stylebox) -> StyleBoxFancy:
 		styleboxfancy.anti_aliasing_size = stylebox.anti_aliasing_size
 		styleboxfancy.resource_local_to_scene = stylebox.resource_local_to_scene
 
+
+		var stylebox_border_widths: Array[int]
 		# i represents corner/side
 		for i: int in range(4):
 			styleboxfancy.set_corner_radius(i, stylebox.get_corner_radius(i))
 			styleboxfancy.set_expand_margin(i, stylebox.get_expand_margin(i))
 			styleboxfancy.set_content_margin(i, stylebox.get_content_margin(i))
+			stylebox_border_widths.append(stylebox.get_border_width(i))
 
-		if stylebox.get_border_width_min() > 0:
+		# Borders
+		if stylebox_border_widths.max() > 0:
 			var styleborder = StyleBorder.new()
 			styleborder.color = stylebox.border_color
 			styleborder.blend = stylebox.border_blend
 
 			for i: int in range(4):
-				styleborder.set_width(i, stylebox.get_border_width(i))
+				styleborder.set_width(i, stylebox_border_widths[i])
 
 			styleboxfancy.borders.append(styleborder)
 
