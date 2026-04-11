@@ -479,8 +479,8 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 	if not outer_rect.has_area():
 		return
 
+	# If interior is filled just draw a rect
 	if not inner_rect.has_area() and not border.blend:
-		# Since it is filled, drawing just the rect is more performant
 		_draw_rect(
 			to_canvas_item,
 			outer_rect,
@@ -491,7 +491,8 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 		)
 		return
 
-	if anti_aliasing:
+	# Adjustments for AA
+	if corner_radius and anti_aliasing:
 		var antialiasing_sides: Vector4 = Vector4(
 			anti_aliasing_size if border.width_left else 0.0,
 			anti_aliasing_size if border.width_top else 0.0,

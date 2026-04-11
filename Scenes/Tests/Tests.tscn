@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://3hoyv2pwgaop"]
+[gd_scene load_steps=36 format=3 uid="uid://3hoyv2pwgaop"]
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_1cpl6"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_0g455"]
@@ -557,6 +557,85 @@ anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
+[sub_resource type="Resource" id="Resource_erq7f"]
+script = ExtResource("1_1cpl6")
+color = Color(0, 0, 0, 1)
+blend = false
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="Resource" id="Resource_yp3xt"]
+script = ExtResource("1_1cpl6")
+color = Color(0.835254, 4.33177e-07, 0.441206, 1)
+blend = false
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="Resource" id="Resource_c6f8i"]
+script = ExtResource("1_1cpl6")
+color = Color(0, 0, 0, 1)
+blend = false
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="StyleBox" id="StyleBox_s3jv5"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("2_0g455")
+color = Color(0.6, 0.6, 0.6, 1)
+draw_center = true
+skew = Vector2(0, 0)
+borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_erq7f"), SubResource("Resource_yp3xt"), SubResource("Resource_c6f8i")])
+corner_detail = 8
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_curvature_top_left = 1.0
+corner_curvature_top_right = 1.0
+corner_curvature_bottom_right = 1.0
+corner_curvature_bottom_left = 1.0
+expand_margin_left = 0.0
+expand_margin_top = 0.0
+expand_margin_right = 0.0
+expand_margin_bottom = 0.0
+shadow_enabled = false
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_blur = 1
+shadow_offset = Vector2(0, 0)
+shadow_spread = Vector2(0, 0)
+anti_aliasing = true
+anti_aliasing_size = 1.0
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
 [node name="Tests" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -666,3 +745,11 @@ offset_right = 469.0
 offset_bottom = 395.0
 rotation = -3.14159
 theme_override_styles/panel = SubResource("StyleBox_c6f8i")
+
+[node name="Layered borders" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 353.0
+offset_right = 171.0
+offset_bottom = 489.0
+theme_override_styles/panel = SubResource("StyleBox_s3jv5")
