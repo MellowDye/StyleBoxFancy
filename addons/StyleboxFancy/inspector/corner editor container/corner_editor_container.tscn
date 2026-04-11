@@ -62,7 +62,7 @@ corner_radius_bottom_left = 3
 corner_detail = 3
 anti_aliasing = false
 
-[node name="CornerEditorContainer" type="VBoxContainer" node_paths=PackedStringArray("panel", "radius_controls", "curvature_controls", "link_button", "properties_dict")]
+[node name="CornerEditorContainer" type="VBoxContainer" node_paths=PackedStringArray("panel", "radius_controls", "curvature_controls", "link_button", "properties_dict", "editable_controls")]
 offset_right = 252.0
 offset_bottom = 101.0
 script = ExtResource("1_r6tm4")
@@ -84,6 +84,7 @@ NodePath("PanelContainer/Curvature controls/Top right corner/TR curvature slider
 NodePath("PanelContainer/Curvature controls/Bottom left corner/BL curvature slider"): 6,
 NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature slider"): 7
 }
+editable_controls = [NodePath("PanelContainer/Radius controls/Top left corner/TL revert button"), NodePath("PanelContainer/Radius controls/Top left corner/TL radius spinbox"), NodePath("PanelContainer/Radius controls/Top right corner/TR revert button"), NodePath("PanelContainer/Radius controls/Top right corner/TR radius spinbox"), NodePath("PanelContainer/Radius controls/Bottom left corner/BL revert button"), NodePath("PanelContainer/Radius controls/Bottom left corner/BL radius spinbox"), NodePath("PanelContainer/Radius controls/Bottom right corner/BR revert button"), NodePath("PanelContainer/Radius controls/Bottom right corner/BR radius spinbox"), NodePath("PanelContainer/Curvature controls/Top left corner/TL curvature preset button"), NodePath("PanelContainer/Curvature controls/Top left corner/TL curvature slider"), NodePath("PanelContainer/Curvature controls/Top right corner/TR curvature preset button"), NodePath("PanelContainer/Curvature controls/Top right corner/TR curvature slider"), NodePath("PanelContainer/Curvature controls/Bottom left corner/BL curvature preset button"), NodePath("PanelContainer/Curvature controls/Bottom left corner/BL curvature slider"), NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature preset button"), NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature slider")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

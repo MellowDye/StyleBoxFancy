@@ -21,6 +21,9 @@ func _on_multi_property_reverted(properties: Array[StringName]) -> void:
 		values.append(get_edited_object().property_get_revert(property))
 	multiple_properties_changed.emit(properties, values, false)
 
+func _set_read_only(_read_only: bool):
+	_update_property()
+
 func _init():
 	draw_background = false
 	add_child(controls)
@@ -35,4 +38,9 @@ func _ready():
 	controls.set_all_properties(get_edited_object())
 
 func _update_property():
-	controls.set_all_properties(get_edited_object())
+	if read_only:
+		controls.set_all_properties(get_edited_object())
+		controls.set_read_only(read_only)
+	else:
+		controls.set_read_only(read_only)
+		controls.set_all_properties(get_edited_object())

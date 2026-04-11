@@ -35,6 +35,7 @@ const CORNER_STRINGNAMES: Array[StringName] = [
 @export var curvature_controls: Control
 @export var link_button: Button
 @export var properties_dict: Dictionary[Node, CornerStringNames]
+@export var editable_controls: Array[Node]
 
 # NOTE: Accidentaly managed to instance a EditorSpinSlider inside the scene
 # so I don't need to generate them anymore, but I'll leave this just in case
@@ -125,3 +126,11 @@ func set_all_properties(stylebox: StyleBoxFancy) -> void:
 			node.set_value_no_signal(stylebox.get(property))
 		if node is Button:
 			node.disabled = !stylebox.property_can_revert(property)
+
+func set_read_only(read_only: bool):
+	for node: Node in editable_controls:
+		if node is EditorSpinSlider:
+			node.read_only = read_only
+
+		elif node is Button:
+			node.disabled = true
