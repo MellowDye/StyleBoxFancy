@@ -673,8 +673,8 @@ func _get_sides_width_from_rects(inner_rect: Rect2, outer_rect: Rect2) -> Vector
 	return Vector4(
 		inner_rect.position.x - outer_rect.position.x,
 		inner_rect.position.y - outer_rect.position.y,
-		(outer_rect.position.x + outer_rect.size.x) - (inner_rect.position.x + inner_rect.size.x),
-		(outer_rect.position.y + outer_rect.size.y) - (inner_rect.position.y + inner_rect.size.y)
+		outer_rect.end.x - inner_rect.end.x,
+		outer_rect.end.y - inner_rect.end.y
 	)
 
 
