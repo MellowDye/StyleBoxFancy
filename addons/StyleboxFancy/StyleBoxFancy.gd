@@ -24,10 +24,13 @@ const Curvatures = {
 	"Notch" = -7.0
 }
 
-enum TextureScaleMode {
+enum TextureStretchMode {
 	SCALE,
-	TILE,
-	KEEP
+	KEEP,
+	KEEP_CENTERED,
+	KEEP_ASPECT,
+	KEEP_ASPECT_CENTERED,
+	KEEP_ASPECT_COVERED,
 }
 
 # Used to save each corner's geometry that is reused for each rounded rect generated
@@ -47,19 +50,19 @@ var _corner_geometry: Array[PackedVector2Array]
 	set(v):
 		texture = v
 		emit_changed()
-		
+
 ## Whether the texture should scale, tile, or clamp to center.
-@export var repeat: TextureScaleMode:
+@export var stretch_mode: TextureStretchMode:
 	set(v):
-		repeat = v
+		stretch_mode = v
 		emit_changed()
-		
+
 ## Whether the texture should scale, tile, or clamp to center.
 @export var texture_scale: float = 1.0:
 	set(v):
 		texture_scale = v
 		emit_changed()
-		
+
 ## Toggles drawing the center of this stylebox.
 @export var draw_center: bool = true:
 	set(v):
@@ -411,7 +414,7 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 			indices,
 			all_points,
 			colors,
-			_get_polygon_uv_scale(all_points, texture_rect),
+			_get_polygon_uv(all_points, texture_rect, ring_texture, stretch_mode),
 			PackedInt32Array(),
 			PackedFloat32Array(),
 			ring_texture.get_rid()
@@ -429,18 +432,21 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 
 func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radius: Vector4, aa: float, rect_texture: Texture2D = null, force_aa: bool = false) -> void:
 	# Simple rect check
-	if not corner_radius and not force_aa:
-		if rect_texture:
-			RenderingServer.canvas_item_add_texture_rect(to_canvas_item, rect, rect_texture.get_rid(), true, rect_color)
-		else:
+	if not corner_radius and not force_aa and false:
+		if not rect_texture:
 			RenderingServer.canvas_item_add_rect(to_canvas_item, rect, rect_color)
-		return
+			return
+
+		if rect_texture and stretch_mode == TextureStretchMode.SCALE:
+			RenderingServer.canvas_item_add_texture_rect(to_canvas_item, rect, rect_texture.get_rid(), false, rect_color)
+			return
 
 	# Rounded rect
 	var center_rect: Rect2 = rect
 	var center_corner_radius: Vector4 = _fit_corner_radius_in_rect(corner_radius, center_rect)
 
-	if aa != 0: # if antialiasing
+	# Anti aliasing
+	if aa != 0 and corner_radius:
 		var inner_rect: Rect2 = rect.grow(-aa * 0.5)
 		# NOTE: Godot will report an error in rect.expand when its size is negative
 		# but will work anyways :/
@@ -467,16 +473,7 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 	var points: PackedVector2Array = _get_rounded_rect(center_rect, center_corner_radius)
 
 	if rect_texture != null:
-		var uvs : PackedVector2Array
-		if repeat == TextureScaleMode.SCALE:
-			uvs = _get_polygon_uv_scale(points, rect)
-		elif repeat == TextureScaleMode.TILE:
-			uvs = _get_polygon_uv_tiled(points, rect, rect_texture, texture_scale)
-			RenderingServer.canvas_item_set_default_texture_repeat(to_canvas_item, RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
-		elif repeat == TextureScaleMode.KEEP:
-			RenderingServer.canvas_item_set_default_texture_repeat(to_canvas_item, RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_DISABLED)
-			uvs = _get_polygon_uv_centered(points, rect, rect_texture)
-		
+		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, stretch_mode)
 		RenderingServer.canvas_item_add_polygon(
 			to_canvas_item,
 			points,
@@ -723,42 +720,70 @@ func _adjust_corner_radius(corner_radius: Vector4, sides_width: Vector4, grow: b
 			max(0, corner_radius[3] - min(sides_width[3], sides_width[0]) * sqrt(pow(2, corner_curvature_bottom_left - 1)))
 		)
 
-
-func _get_polygon_uv_scale(polygon: PackedVector2Array, rect: Rect2) -> PackedVector2Array:
-	var uv: PackedVector2Array
-	uv.resize(polygon.size())
-	for point_idx in polygon.size():
-		uv[point_idx] = (polygon[point_idx] - rect.position) / rect.size
-	return uv
-
-func _get_polygon_uv_tiled(
-		polygon: PackedVector2Array,
-		rect: Rect2,
-		texture: Texture2D,
-		tile_scale: float = 1.0
+func _get_polygon_uv(
+	polygon: PackedVector2Array,
+	rect: Rect2,
+	texture: Texture2D,
+	mode: TextureStretchMode
 	) -> PackedVector2Array:
-	var uv: PackedVector2Array
-	uv.resize(polygon.size())
-	var tex_size: Vector2 = texture.get_size()
+
+	var uvs: PackedVector2Array
+	uvs.resize(polygon.size())
+	var tex_size = texture.get_size()
+	var rect_size = rect.size
+
+	var scale: Vector2 = Vector2.ONE
+	var offset: Vector2 = Vector2.ZERO
+
+	match mode:
+		TextureStretchMode.SCALE:
+			scale = Vector2.ONE
+
+		TextureStretchMode.KEEP:
+			scale = rect_size / tex_size
+
+		TextureStretchMode.KEEP_CENTERED:
+			scale = rect_size / tex_size
+			offset = (Vector2.ONE - scale) * 0.5
+
+		TextureStretchMode.KEEP_ASPECT:
+			var tex_aspect: float = tex_size.x / tex_size.y
+			var rect_aspect: float = rect_size.x / rect_size.y
+
+			if tex_aspect > rect_aspect:
+				scale = Vector2(1, 1 / rect_aspect)
+			else:
+				scale = Vector2(rect_aspect, 1)
+
+		TextureStretchMode.KEEP_ASPECT_CENTERED:
+			var tex_aspect: float = tex_size.x / tex_size.y
+			var rect_aspect: float = rect_size.x / rect_size.y
+
+			if tex_aspect > rect_aspect:
+				scale = Vector2(1, 1 / rect_aspect)
+			else:
+				scale = Vector2(rect_aspect, 1)
+
+			offset = (Vector2.ONE - scale) * 0.5
+
+		TextureStretchMode.KEEP_ASPECT_COVERED:
+			var tex_aspect: float = tex_size.x / tex_size.y
+			var rect_aspect: float = rect_size.x / rect_size.y
+
+			if tex_aspect > rect_aspect:
+				scale = Vector2(rect_aspect, 1)
+			else:
+				scale = Vector2(1, 1 / rect_aspect)
+			offset = (Vector2.ONE - scale) * 0.5
+
 	for i in polygon.size():
-		var local_pos: Vector2 = polygon[i] - rect.position
-		uv[i] = local_pos / (tex_size * tile_scale)
-	return uv
-	
-func _get_polygon_uv_centered(
-		polygon: PackedVector2Array,
-		rect: Rect2,
-		texture: Texture2D
-	) -> PackedVector2Array:
-	var uv: PackedVector2Array
-	uv.resize(polygon.size())
-	var tex_size: Vector2 = texture.get_size()
-	var rect_center: Vector2 = rect.size * 0.5
-	for i in polygon.size():
-		var local_pos: Vector2 = polygon[i] - rect.position
-		var centered_pos: Vector2 = local_pos - rect_center + tex_size * 0.5
-		uv[i] = centered_pos / tex_size
-	return uv
+		var uv: Vector2 = (polygon[i] - rect.position) / rect.size
+		uv = uv * scale + offset
+
+		uvs[i] = uv
+
+	return uvs
+
 
 func _fit_corner_radius_in_rect(corners: Vector4, rect: Rect2) -> Vector4:
 	var adjusted: Vector4
