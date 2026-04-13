@@ -33,6 +33,13 @@ enum TextureStretchMode {
 	KEEP_ASPECT_COVERED,
 }
 
+enum TextureRepeatMode {
+	INHERIT,
+	DISABLED,
+	ENABLED,
+	MIRROR
+}
+
 # Used to save each corner's geometry that is reused for each rounded rect generated
 # as it is scaled depending on the corner radius
 var _corner_geometry: Array[PackedVector2Array]
@@ -52,9 +59,21 @@ var _corner_geometry: Array[PackedVector2Array]
 		emit_changed()
 
 ## Whether the texture should scale, tile, or clamp to center.
-@export var stretch_mode: TextureStretchMode:
+@export var texture_stretch_mode: TextureStretchMode:
 	set(v):
-		stretch_mode = v
+		texture_stretch_mode = v
+		emit_changed()
+
+## Sets the repeating mode that the [member texture] will use,
+## if set to [constant TextureRepeatMode.INHERIT] it will use the
+## [CanvasItem]'s texture_repeat property. [br] [br]
+##
+## [b]Note:[/b] When setting back to Inherit from another mode, it might not
+## update inmediately, in that case you need to set again the [CanvasItem]'s
+## texture_repeat property.
+@export var texture_repeat: TextureRepeatMode:
+	set(v):
+		texture_repeat = v
 		emit_changed()
 
 ## Whether the texture should scale, tile, or clamp to center.
@@ -414,7 +433,7 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 			indices,
 			all_points,
 			colors,
-			_get_polygon_uv(all_points, texture_rect, ring_texture, stretch_mode),
+			_get_polygon_uv(all_points, texture_rect, ring_texture, texture_stretch_mode),
 			PackedInt32Array(),
 			PackedFloat32Array(),
 			ring_texture.get_rid()
@@ -437,7 +456,7 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 			RenderingServer.canvas_item_add_rect(to_canvas_item, rect, rect_color)
 			return
 
-		if rect_texture and stretch_mode == TextureStretchMode.SCALE:
+		if rect_texture and texture_stretch_mode == TextureStretchMode.SCALE:
 			RenderingServer.canvas_item_add_texture_rect(to_canvas_item, rect, rect_texture.get_rid(), false, rect_color)
 			return
 
@@ -473,7 +492,7 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 	var points: PackedVector2Array = _get_rounded_rect(center_rect, center_corner_radius)
 
 	if rect_texture != null:
-		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, stretch_mode)
+		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, texture_stretch_mode)
 		RenderingServer.canvas_item_add_polygon(
 			to_canvas_item,
 			points,
@@ -838,6 +857,12 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	)
 
 	_generate_corner_geometry(corner_curvatures)
+
+	if texture_repeat != TextureRepeatMode.INHERIT:
+		RenderingServer.canvas_item_set_default_texture_repeat(
+			to_canvas_item,
+			texture_repeat as RenderingServer.CanvasItemTextureRepeat
+		)
 
 	# Skew
 	var transform := Transform2D(Vector2(1, -skew.y), Vector2(-skew.x, 1), Vector2(rect.size.y * skew.x * 0.5, rect.size.x * skew.y * 0.5))
