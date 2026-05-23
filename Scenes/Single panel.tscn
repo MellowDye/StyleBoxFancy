@@ -30,6 +30,9 @@ color = Color(0, 0, 0, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_4rx3t")]([SubResource("Resource_r7dxd")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 20
 corner_radius_top_left = 15
 corner_radius_top_right = 15
@@ -51,9 +54,42 @@ shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gsobb"]
+[sub_resource type="StyleBox" id="StyleBox_wmrnq"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("2_wmrnq")
+color = Color(1, 0.666889, 0.772814, 1)
+draw_center = true
+skew = Vector2(0, 0)
+borders = Array[ExtResource("1_4rx3t")]([])
 texture = ExtResource("3_wmrnq")
-modulate_color = Color(1, 0.666889, 0.772814, 1)
+texture_stretch_mode = 5
+texture_repeat = 0
+texture_scale = 1.81
+corner_detail = 8
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_curvature_top_left = 1.0
+corner_curvature_top_right = 1.0
+corner_curvature_bottom_right = 1.0
+corner_curvature_bottom_left = 1.0
+expand_margin_left = 0.0
+expand_margin_top = 0.0
+expand_margin_right = 0.0
+expand_margin_bottom = 0.0
+shadow_enabled = false
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_blur = 1
+shadow_offset = Vector2(0, 0)
+shadow_spread = Vector2(0, 0)
+anti_aliasing = true
+anti_aliasing_size = 1.0
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -75,8 +111,8 @@ theme_override_styles/panel = SubResource("StyleBox_588td")
 
 [node name="Panel2" type="Panel" parent="."]
 layout_mode = 1
-offset_left = -0.218109
-offset_top = 148.669
-offset_right = 178.782
-offset_bottom = 268.669
-theme_override_styles/panel = SubResource("StyleBoxTexture_gsobb")
+offset_left = -9.25304
+offset_top = 149.0
+offset_right = 218.747
+offset_bottom = 227.0
+theme_override_styles/panel = SubResource("StyleBox_wmrnq")

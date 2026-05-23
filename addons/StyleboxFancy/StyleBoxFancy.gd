@@ -52,36 +52,6 @@ var _corner_geometry: Array[PackedVector2Array]
 		color = v
 		emit_changed()
 
-## The background texture of this stylebox.
-@export var texture: Texture2D:
-	set(v):
-		texture = v
-		emit_changed()
-
-## Whether the texture should scale, tile, or clamp to center.
-@export var texture_stretch_mode: TextureStretchMode:
-	set(v):
-		texture_stretch_mode = v
-		emit_changed()
-
-## Sets the repeating mode that the [member texture] will use,
-## if set to [constant TextureRepeatMode.INHERIT] it will use the
-## [CanvasItem]'s texture_repeat property. [br] [br]
-##
-## [b]Note:[/b] When setting back to Inherit from another mode, it might not
-## update inmediately, in that case you need to set again the [CanvasItem]'s
-## texture_repeat property.
-@export var texture_repeat: TextureRepeatMode:
-	set(v):
-		texture_repeat = v
-		emit_changed()
-
-## Whether the texture should scale, tile, or clamp to center.
-@export var texture_scale: float = 1.0:
-	set(v):
-		texture_scale = v
-		emit_changed()
-
 ## Toggles drawing the center of this stylebox.
 @export var draw_center: bool = true:
 	set(v):
@@ -106,6 +76,39 @@ var _corner_geometry: Array[PackedVector2Array]
 				border.changed.connect(emit_changed)
 		emit_changed()
 
+
+#region Texture
+@export_group("Texture")
+## The background texture of this stylebox.
+@export var texture: Texture2D:
+	set(v):
+		texture = v
+		emit_changed()
+
+## Whether the texture should scale, tile, or clamp to center.
+@export var texture_stretch_mode: TextureStretchMode:
+	set(v):
+		texture_stretch_mode = v
+		emit_changed()
+
+## Sets the repeating mode that the [member texture] will use,
+## if set to [constant TextureRepeatMode.INHERIT] it will use the
+## [CanvasItem]'s texture_repeat property. [br] [br]
+##
+## [b]Note:[/b] When setting back to Inherit from another mode, it might not
+## update inmediately, in that case you need to set again the [CanvasItem]'s
+## texture_repeat property.
+@export var texture_repeat: TextureRepeatMode:
+	set(v):
+		texture_repeat = v
+		emit_changed()
+
+## Scales the texture
+@export var texture_scale: float = 1.0:
+	set(v):
+		texture_scale = v
+		emit_changed()
+#endregion
 
 #region Corners
 
@@ -433,7 +436,7 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 			indices,
 			all_points,
 			colors,
-			_get_polygon_uv(all_points, texture_rect, ring_texture, texture_stretch_mode),
+			_get_polygon_uv(all_points, texture_rect, ring_texture),
 			PackedInt32Array(),
 			PackedFloat32Array(),
 			ring_texture.get_rid()
@@ -492,7 +495,7 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 	var points: PackedVector2Array = _get_rounded_rect(center_rect, center_corner_radius)
 
 	if rect_texture != null:
-		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, texture_stretch_mode)
+		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, texture_stretch_mode, texture_scale)
 		RenderingServer.canvas_item_add_polygon(
 			to_canvas_item,
 			points,
@@ -744,7 +747,8 @@ func _get_polygon_uv(
 	polygon: PackedVector2Array,
 	rect: Rect2,
 	texture: Texture2D,
-	mode: TextureStretchMode
+	mode: TextureStretchMode = TextureStretchMode.SCALE,
+	texture_scale: float = 1
 	) -> PackedVector2Array:
 
 	var uvs: PackedVector2Array
@@ -758,12 +762,16 @@ func _get_polygon_uv(
 	match mode:
 		TextureStretchMode.SCALE:
 			scale = Vector2.ONE
+			scale /= texture_scale
 
 		TextureStretchMode.KEEP:
 			scale = rect_size / tex_size
+			scale /= texture_scale
 
 		TextureStretchMode.KEEP_CENTERED:
 			scale = rect_size / tex_size
+			scale /= texture_scale
+
 			offset = (Vector2.ONE - scale) * 0.5
 
 		TextureStretchMode.KEEP_ASPECT:
@@ -774,6 +782,7 @@ func _get_polygon_uv(
 				scale = Vector2(1, 1 / rect_aspect)
 			else:
 				scale = Vector2(rect_aspect, 1)
+			scale /= texture_scale
 
 		TextureStretchMode.KEEP_ASPECT_CENTERED:
 			var tex_aspect: float = tex_size.x / tex_size.y
@@ -783,6 +792,7 @@ func _get_polygon_uv(
 				scale = Vector2(1, 1 / rect_aspect)
 			else:
 				scale = Vector2(rect_aspect, 1)
+			scale /= texture_scale
 
 			offset = (Vector2.ONE - scale) * 0.5
 
@@ -794,6 +804,7 @@ func _get_polygon_uv(
 				scale = Vector2(rect_aspect, 1)
 			else:
 				scale = Vector2(1, 1 / rect_aspect)
+			scale /= texture_scale
 			offset = (Vector2.ONE - scale) * 0.5
 
 	for i in polygon.size():
