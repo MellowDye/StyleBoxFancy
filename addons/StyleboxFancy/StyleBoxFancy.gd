@@ -25,18 +25,28 @@ const Curvatures = {
 }
 
 enum TextureStretchMode {
+	## Scale to fit the node's bounding rectangle.
 	SCALE,
+	## The texture keeps its original size and stays in the bounding rectangle's top-left corner.
 	KEEP,
+	## The texture keeps its original size and stays centered in the node's bounding rectangle.
 	KEEP_CENTERED,
+	## Scale the texture to fit the node's bounding rectangle, but maintain the texture's aspect ratio.
 	KEEP_ASPECT,
+	## Scale the texture to fit the node's bounding rectangle, center it, and maintain its aspect ratio.
 	KEEP_ASPECT_CENTERED,
+	## Scale the texture so that the shorter side fits the bounding rectangle. The other side clips to the node's limits.
 	KEEP_ASPECT_COVERED,
 }
 
 enum TextureRepeatMode {
+	## The CanvasItem will inherit the filter from its parent.
 	INHERIT,
+	## Texture will not repeat.
 	DISABLED,
+	## Texture will repeat normally.
 	ENABLED,
+	## Texture will repeat in a 2×2 tiled mode, where elements at even positions are mirrored.
 	MIRROR
 }
 
@@ -85,28 +95,30 @@ var _corner_geometry: Array[PackedVector2Array]
 		texture = v
 		emit_changed()
 
-## Whether the texture should scale, tile, or clamp to center.
+## Controls the texture behavior when resizing the stylebox.
 @export var texture_stretch_mode: TextureStretchMode:
 	set(v):
 		texture_stretch_mode = v
 		emit_changed()
 
 ## Sets the repeating mode that the [member texture] will use,
-## if set to [constant TextureRepeatMode.INHERIT] it will use the
-## [CanvasItem]'s texture_repeat property. [br] [br]
+## by overriding the [CanvasItem] texture_repeat property. [br] [br]
+##
+## If set to [constant TextureRepeatMode.INHERIT] it will use the
+## [CanvasItem] texture_repeat property. [br] [br]
 ##
 ## [b]Note:[/b] When setting back to Inherit from another mode, it might not
-## update inmediately, in that case you need to set again the [CanvasItem]'s
+## update inmediately, in that case you need to set again the [CanvasItem]
 ## texture_repeat property.
 @export var texture_repeat: TextureRepeatMode:
 	set(v):
 		texture_repeat = v
 		emit_changed()
 
-## Scales the texture
+## Scales the texture, its behaviour depends on [member texture_stretch_mode].
 @export var texture_scale: float = 1.0:
 	set(v):
-		texture_scale = v
+		texture_scale = max(v, 0.001)
 		emit_changed()
 #endregion
 
@@ -179,7 +191,6 @@ var _corner_geometry: Array[PackedVector2Array]
 		emit_changed()
 #endregion
 
-
 #region Expand margins
 @export_group("Expand Margins", "expand_margin_")
 ## Expands the stylebox rect outside of the control rect on the left edge,
@@ -214,7 +225,6 @@ var _corner_geometry: Array[PackedVector2Array]
 		expand_margin_bottom = v
 		emit_changed()
 #endregion
-
 
 #region Shadow
 @export_group("Shadow", "shadow_")
@@ -256,7 +266,6 @@ var _corner_geometry: Array[PackedVector2Array]
 		shadow_spread = v
 		emit_changed()
 #endregion
-
 
 #region Anti aliasing
 @export_group("Anti Aliasing", "anti_aliasing_")
