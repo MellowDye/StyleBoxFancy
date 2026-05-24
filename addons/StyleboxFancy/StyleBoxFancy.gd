@@ -103,7 +103,7 @@ var _corner_geometry: Array[PackedVector2Array]
 			emit_changed()
 
 #region Texture
-@export_group("Texture")
+@export_group("Texture", "texture_")
 ## The background texture of this stylebox.
 @export var texture: Texture2D:
 	set(v):
