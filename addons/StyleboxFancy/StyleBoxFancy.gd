@@ -86,6 +86,18 @@ var _corner_geometry: Array[PackedVector2Array]
 				border.changed.connect(emit_changed)
 		emit_changed()
 
+## @experimental
+## Overrides the [CanvasItem] material that uses this StyleBox. It accepts
+## [CanvasItemMaterial] and [ShaderMaterial] as valid materials. [br][br]
+##
+## [b]IMPORTANT:[/b] A texture MUST be set for both the background and borders for the
+## UVs to work, otherwise they will all be set to (0, 0). Also UVs are affected by
+## [member texture_stretch_mode] and [member texture_scale]
+@export var material: Material:
+	set(v):
+		if v is CanvasItemMaterial or v is ShaderMaterial or v == null:
+			material = v
+			emit_changed()
 
 #region Texture
 @export_group("Texture")
@@ -109,7 +121,10 @@ var _corner_geometry: Array[PackedVector2Array]
 ##
 ## [b]Note:[/b] When setting back to Inherit from another mode, it might not
 ## update inmediately, in that case you need to set again the [CanvasItem]
-## texture_repeat property.
+## texture_repeat property. [br] [br]
+##
+## [b]Note 2:[/b] The editor stylebox preview will absolutely ignore this property
+## and may appear different from the 2D scene.
 @export var texture_repeat: TextureRepeatMode:
 	set(v):
 		texture_repeat = v
@@ -887,6 +902,11 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	# Skew
 	var transform := Transform2D(Vector2(1, -skew.y), Vector2(-skew.x, 1), Vector2(rect.size.y * skew.x * 0.5, rect.size.x * skew.y * 0.5))
 	RenderingServer.canvas_item_add_set_transform(to_canvas_item, transform)
+
+	# Material
+	if material:
+		RenderingServer.canvas_item_set_material(to_canvas_item, material)
+
 
 	if shadow_enabled:
 		var shadow_rect: Rect2 = rect.grow(shadow_blur * 0.5)
