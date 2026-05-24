@@ -1,28 +1,41 @@
-[gd_scene load_steps=19 format=3 uid="uid://g0b6setpwfvp"]
+[gd_scene load_steps=21 format=3 uid="uid://qi4gi7p0gr5h"]
 
 [ext_resource type="FontFile" uid="uid://kuedcwtejp32" path="res://Scenes/Demo/Lato-Bold.ttf" id="1_bu5fk"]
+[ext_resource type="Texture2D" uid="uid://djmsx7jolhrqm" path="res://Scenes/Demo/StyleBoxFancyHD.svg" id="1_g26r3"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_1oc3m"]
+[ext_resource type="FontFile" uid="uid://buxn7ujn6m2w6" path="res://Scenes/Demo/Lato-Black.ttf" id="2_owkfx"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_7lhq6"]
 
-[sub_resource type="Gradient" id="Gradient_gmbbs"]
+[sub_resource type="Gradient" id="Gradient_tjoip"]
 interpolation_mode = 2
 interpolation_color_space = 2
-colors = PackedColorArray(0.157448, 0.236117, 0.303179, 1, 0.121698, 0.366343, 0.331075, 1)
+offsets = PackedFloat32Array(0, 0.541528, 1)
+colors = PackedColorArray(0.282812, 0.279164, 0.189097, 1, 0.222656, 0.318846, 0.254598, 1, 0.211082, 0.296038, 0.344985, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ltcql"]
-gradient = SubResource("Gradient_gmbbs")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wrtj3"]
+gradient = SubResource("Gradient_tjoip")
 fill_from = Vector2(0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_rholk"]
-font = ExtResource("1_bu5fk")
-font_size = 130
-font_color = Color(0.835153, 0.997673, 0.948388, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_cypu8"]
+font = ExtResource("2_owkfx")
+font_size = 150
+font_color = Color(0.953442, 0.971685, 0.665082, 1)
 shadow_size = 25
 
-[sub_resource type="Resource" id="Resource_w84ef"]
+[sub_resource type="Gradient" id="Gradient_4g042"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.581395, 1)
+colors = PackedColorArray(0.180392, 0.984314, 0.67451, 1, 0.976471, 0.776471, 0.180392, 1, 0.615686, 0.32549, 0.0941176, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vokx2"]
+gradient = SubResource("Gradient_4g042")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Resource" id="Resource_tjoip"]
 script = ExtResource("2_1oc3m")
 color = Color(1, 1, 1, 1)
 blend = false
+texture = SubResource("GradientTexture2D_vokx2")
 ignore_stack = false
 width_left = 10
 width_top = 10
@@ -34,16 +47,28 @@ inset_right = 0
 inset_bottom = 0
 metadata/_custom_type_script = "uid://cjmmhbp1b5312"
 
-[sub_resource type="Gradient" id="Gradient_4r53h"]
-interpolation_color_space = 2
-colors = PackedColorArray(0.901722, 0.430031, 0.257857, 1, 1, 0.862251, 0.116117, 1)
+[sub_resource type="Resource" id="Resource_6mnvi"]
+script = ExtResource("2_1oc3m")
+color = Color(0.07928, 0.0048, 0.24, 0.607843)
+blend = false
+ignore_stack = false
+width_left = 8
+width_top = 8
+width_right = 8
+width_bottom = 8
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_fyqw4"]
-gradient = SubResource("Gradient_4r53h")
-fill = 1
-fill_from = Vector2(0, 1)
+[sub_resource type="Gradient" id="Gradient_x3kad"]
+colors = PackedColorArray(0.415686, 0.415686, 0.415686, 1, 0.396078, 0.356863, 0.290196, 1)
 
-[sub_resource type="StyleBox" id="StyleBox_tf7eb"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7mpbo"]
+gradient = SubResource("Gradient_x3kad")
+
+[sub_resource type="StyleBox" id="StyleBox_hv4dh"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -52,15 +77,18 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("3_7lhq6")
 color = Color(1, 1, 1, 1)
-texture = SubResource("GradientTexture2D_fyqw4")
 draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_w84ef")])
+borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_tjoip"), SubResource("Resource_6mnvi")])
+texture = SubResource("GradientTexture1D_7mpbo")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
-corner_radius_top_left = 135
-corner_radius_top_right = 135
-corner_radius_bottom_right = 135
-corner_radius_bottom_left = 135
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 corner_curvature_top_left = 2.0
 corner_curvature_top_right = 2.0
 corner_curvature_bottom_right = 2.0
@@ -69,31 +97,16 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(1, 1, 1, 0.498039)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.333333)
+shadow_blur = 16
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="Resource" id="Resource_bpapi"]
-script = ExtResource("2_1oc3m")
-color = Color(1, 1, 1, 1)
-blend = false
-ignore_stack = false
-width_left = 10
-width_top = 10
-width_right = 10
-width_bottom = 10
-inset_left = 0
-inset_top = 0
-inset_right = 0
-inset_bottom = 0
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_vdofj"]
+[sub_resource type="StyleBox" id="StyleBox_xvuum"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -102,10 +115,13 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("3_7lhq6")
 color = Color(1, 1, 1, 1)
-texture = SubResource("GradientTexture2D_fyqw4")
 draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_bpapi")])
+borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_tjoip"), SubResource("Resource_6mnvi")])
+texture = SubResource("GradientTexture1D_7mpbo")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 75
 corner_radius_top_right = 75
@@ -119,31 +135,16 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(1, 1, 1, 0.498039)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.333333)
+shadow_blur = 16
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="Resource" id="Resource_g26r3"]
-script = ExtResource("2_1oc3m")
-color = Color(1, 1, 1, 1)
-blend = false
-ignore_stack = false
-width_left = 10
-width_top = 10
-width_right = 10
-width_bottom = 10
-inset_left = 0
-inset_top = 0
-inset_right = 0
-inset_bottom = 0
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_8men7"]
+[sub_resource type="StyleBox" id="StyleBox_i86mk"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -152,10 +153,13 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("3_7lhq6")
 color = Color(1, 1, 1, 1)
-texture = SubResource("GradientTexture2D_fyqw4")
 draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_g26r3")])
+borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_tjoip"), SubResource("Resource_6mnvi")])
+texture = SubResource("GradientTexture1D_7mpbo")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -169,31 +173,16 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(1, 1, 1, 0.498039)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.333333)
+shadow_blur = 16
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="Resource" id="Resource_owkfx"]
-script = ExtResource("2_1oc3m")
-color = Color(1, 1, 1, 1)
-blend = false
-ignore_stack = false
-width_left = 10
-width_top = 10
-width_right = 10
-width_bottom = 10
-inset_left = 0
-inset_top = 0
-inset_right = 0
-inset_bottom = 0
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_mvqua"]
+[sub_resource type="StyleBox" id="StyleBox_q0ke4"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -202,10 +191,13 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("3_7lhq6")
 color = Color(1, 1, 1, 1)
-texture = SubResource("GradientTexture2D_fyqw4")
 draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_owkfx"), null])
+borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_tjoip"), SubResource("Resource_6mnvi")])
+texture = SubResource("GradientTexture1D_7mpbo")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -219,31 +211,16 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(1, 1, 1, 0.498039)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.333333)
+shadow_blur = 16
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="Resource" id="Resource_27p05"]
-script = ExtResource("2_1oc3m")
-color = Color(1, 1, 1, 1)
-blend = false
-ignore_stack = false
-width_left = 10
-width_top = 10
-width_right = 10
-width_bottom = 10
-inset_left = 0
-inset_top = 0
-inset_right = 0
-inset_bottom = 0
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_8d7hp"]
+[sub_resource type="StyleBox" id="StyleBox_6ckmg"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -252,10 +229,13 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("3_7lhq6")
 color = Color(1, 1, 1, 1)
-texture = SubResource("GradientTexture2D_fyqw4")
 draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_27p05")])
+borders = Array[ExtResource("2_1oc3m")]([SubResource("Resource_tjoip"), SubResource("Resource_6mnvi")])
+texture = SubResource("GradientTexture1D_7mpbo")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -269,22 +249,28 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(1, 1, 1, 0.498039)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.333333)
+shadow_blur = 16
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[node name="Curvatures" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_g5t1p"]
+font = ExtResource("1_bu5fk")
+font_size = 64
+font_color = Color(0.952941, 0.972549, 0.662745, 1)
+
+[node name="DemoScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="BG" type="TextureRect" parent="."]
 layout_mode = 1
@@ -293,24 +279,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_ltcql")
+texture = SubResource("GradientTexture2D_wrtj3")
 
-[node name="Label" type="Label" parent="."]
+[node name="Title" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -560.0
-offset_top = -302.818
-offset_right = 560.0
-offset_bottom = -130.818
+offset_left = -700.0
+offset_top = 264.0
+offset_right = 700.0
+offset_bottom = 445.0
 grow_horizontal = 2
-grow_vertical = 2
-text = "Curvatures"
-label_settings = SubResource("LabelSettings_rholk")
-horizontal_alignment = 1
+theme_override_constants/separation = 50
+
+[node name="TextureRect" type="TextureRect" parent="Title"]
+layout_mode = 2
+texture = ExtResource("1_g26r3")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="Title"]
+layout_mode = 2
+text = "Corner curvatures"
+label_settings = SubResource("LabelSettings_cypu8")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -319,45 +310,46 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -560.0
-offset_top = -129.5
-offset_right = 560.0
-offset_bottom = 129.5
+offset_left = -810.0
+offset_top = -45.5
+offset_right = 810.0
+offset_bottom = 286.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 30
 columns = 5
 
 [node name="Panel2" type="Panel" parent="GridContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(300, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_tf7eb")
+theme_override_styles/panel = SubResource("StyleBox_hv4dh")
 
 [node name="Panel3" type="Panel" parent="GridContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(300, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_vdofj")
+theme_override_styles/panel = SubResource("StyleBox_xvuum")
 
 [node name="Panel4" type="Panel" parent="GridContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(300, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_8men7")
+theme_override_styles/panel = SubResource("StyleBox_i86mk")
 
 [node name="Panel5" type="Panel" parent="GridContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_mvqua")
+theme_override_styles/panel = SubResource("StyleBox_q0ke4")
 
 [node name="Panel6" type="Panel" parent="GridContainer"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(300, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_8d7hp")
+theme_override_styles/panel = SubResource("StyleBox_6ckmg")
 
 [node name="Label" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bu5fk")
 theme_override_font_sizes/font_size = 45
 text = "Squircle"
+label_settings = SubResource("LabelSettings_g5t1p")
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="GridContainer"]
@@ -365,6 +357,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bu5fk")
 theme_override_font_sizes/font_size = 45
 text = "Round"
+label_settings = SubResource("LabelSettings_g5t1p")
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="GridContainer"]
@@ -372,6 +365,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bu5fk")
 theme_override_font_sizes/font_size = 45
 text = "Bevel"
+label_settings = SubResource("LabelSettings_g5t1p")
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="GridContainer"]
@@ -379,6 +373,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bu5fk")
 theme_override_font_sizes/font_size = 45
 text = "Scoop"
+label_settings = SubResource("LabelSettings_g5t1p")
 horizontal_alignment = 1
 
 [node name="Label5" type="Label" parent="GridContainer"]
@@ -386,4 +381,5 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bu5fk")
 theme_override_font_sizes/font_size = 45
 text = "Notch"
+label_settings = SubResource("LabelSettings_g5t1p")
 horizontal_alignment = 1

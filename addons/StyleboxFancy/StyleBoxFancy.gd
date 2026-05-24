@@ -92,7 +92,10 @@ var _corner_geometry: Array[PackedVector2Array]
 ##
 ## [b]IMPORTANT:[/b] A texture MUST be set for both the background and borders for the
 ## UVs to work, otherwise they will all be set to (0, 0). Also UVs are affected by
-## [member texture_stretch_mode] and [member texture_scale]
+## [member texture_stretch_mode] and [member texture_scale]. [br][br]
+##
+## Removing a material will also not inmediately update all nodes using it, reload
+## the scenes using them to update them.
 @export var material: Material:
 	set(v):
 		if v is CanvasItemMaterial or v is ShaderMaterial or v == null:

@@ -1,13 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy2mu7siqsklv"]
+[gd_scene load_steps=5 format=3 uid="uid://dy2mu7siqsklv"]
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_4rx3t"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_wmrnq"]
 [ext_resource type="Texture2D" uid="uid://ds1a2dtd5mvjg" path="res://addons/StyleboxFancy/StyleBoxFancy.svg" id="3_wmrnq"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gsobb"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wmrnq"]
-texture = ExtResource("3_wmrnq")
 
 [sub_resource type="StyleBox" id="StyleBox_wmrnq"]
 resource_local_to_scene = false
@@ -58,19 +53,7 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="."]
-texture_filter = 1
-material = SubResource("CanvasItemMaterial_gsobb")
-layout_mode = 0
-offset_left = -43.0
-offset_top = -66.0
-offset_right = 955.0
-offset_bottom = 188.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_wmrnq")
-
-[node name="Blur" type="Panel" parent="."]
 layout_mode = 1
-offset_left = 113.0
-offset_top = 26.0
-offset_right = 646.0
-offset_bottom = 294.0
+offset_right = 533.0
+offset_bottom = 268.0
 theme_override_styles/panel = SubResource("StyleBox_wmrnq")
