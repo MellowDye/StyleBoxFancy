@@ -431,7 +431,19 @@ func _get_points_from_rect(rect: Rect2) -> PackedVector2Array:
 	])
 
 
-func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corner_radius: Vector4, ring_color: Color, ring_texture: Texture2D, texture_rect: Rect2, fade: bool, fade_inside: bool = false) -> void:
+func _draw_ring(
+	to_canvas_item: RID,
+	inner_rect: Rect2,
+	outer_rect: Rect2,
+	corner_radius: Vector4,
+	ring_color: Color,
+	ring_texture: Texture2D,
+	texture_rect: Rect2,
+	fade: bool,
+	fade_inside: bool = false,
+	texture_stretch_mode: TextureStretchMode = TextureStretchMode.SCALE,
+	texture_scale: float = 1) -> void:
+
 	if inner_rect.abs().encloses(outer_rect):
 		return
 
@@ -460,7 +472,7 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 			indices,
 			all_points,
 			colors,
-			_get_polygon_uv(all_points, texture_rect, ring_texture),
+			_get_polygon_uv(all_points, texture_rect, ring_texture, texture_stretch_mode, texture_scale),
 			PackedInt32Array(),
 			PackedFloat32Array(),
 			ring_texture.get_rid()
@@ -476,7 +488,17 @@ func _draw_ring(to_canvas_item: RID, inner_rect: Rect2, outer_rect: Rect2, corne
 	#RenderingServer.canvas_item_add_polyline(to_canvas_item, all_points, [Color.GREEN_YELLOW])
 
 
-func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radius: Vector4, aa: float, rect_texture: Texture2D = null, force_aa: bool = false) -> void:
+func _draw_rect(
+	to_canvas_item: RID,
+	rect: Rect2,
+	rect_color: Color,
+	corner_radius: Vector4,
+	aa: float,
+	rect_texture: Texture2D = null,
+	texture_stretch_mode: TextureStretchMode = TextureStretchMode.SCALE,
+	texture_scale: float = 1,
+	force_aa: bool = false) -> void:
+
 	# Simple rect check
 	if not corner_radius and not force_aa and false:
 		if not rect_texture:
@@ -509,7 +531,10 @@ func _draw_rect(to_canvas_item: RID, rect: Rect2, rect_color: Color, corner_radi
 			rect_color,
 			rect_texture,
 			rect,
-			true
+			true,
+			false,
+			texture_stretch_mode,
+			texture_scale
 		)
 		#_draw_debug_rect(to_canvas_item, inner_rect)
 
@@ -684,11 +709,9 @@ func _triangulate_ring(outer_size: int, inner_size: int, outer_corner_radii: Vec
 			else:
 				# Fill using quads
 				for i in corner_detail:
-					@warning_ignore_start("confusable_local_declaration") # Yeah I know
 					var next_inner: int = (inner_idx + 1) % inner_size
 					var next_outer: int = (outer_idx + 1) % outer_size + inner_size
 					var curr_outer: int = outer_idx + inner_size
-					@warning_ignore_restore("confusable_local_declaration")
 
 					triangles[tri_idx] = inner_idx
 					triangles[tri_idx + 1] = curr_outer
@@ -926,6 +949,8 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 				corner_radii,
 				shadow_blur,
 				shadow_texture,
+				TextureStretchMode.SCALE,
+				1,
 				true
 			)
 
@@ -936,7 +961,9 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 			color,
 			corner_radii,
 			anti_aliasing_size if anti_aliasing else 0.0,
-			texture
+			texture,
+			texture_stretch_mode,
+			texture_scale
 		)
 
 	if borders:
