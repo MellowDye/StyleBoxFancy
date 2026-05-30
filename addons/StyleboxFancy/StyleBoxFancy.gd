@@ -314,12 +314,14 @@ func _property_can_revert(property: StringName) -> bool:
 		_:
 			return false
 
-func _property_get_revert(property: StringName):
+func _property_get_revert(property: StringName) -> Variant:
 	match property:
 		&"corner_radius_top_left", &"corner_radius_top_right", &"corner_radius_bottom_left", &"corner_radius_bottom_right":
 			return 0
 		&"corner_curvature_top_left", &"corner_curvature_top_right", &"corner_curvature_bottom_left", &"corner_curvature_bottom_right":
 			return 1
+		_:
+			return null
 #endregion
 
 #region Draw
@@ -887,7 +889,7 @@ func _draw_debug_rect(to_canvas_item, rect) -> void:
 	var points = _get_points_from_rect(rect)
 	RenderingServer.canvas_item_add_polyline(to_canvas_item, points, [Color.AQUA])
 
-func _draw_debug_polygon(to_canvas_item: RID, polygon: PackedVector2Array):
+func _draw_debug_polygon(to_canvas_item: RID, polygon: PackedVector2Array) -> void:
 	RenderingServer.canvas_item_add_polyline(to_canvas_item, polygon, [Color.AQUA])
 	RenderingServer.canvas_item_add_circle(to_canvas_item, polygon[0], 1, Color.RED)
 	RenderingServer.canvas_item_add_circle(to_canvas_item, polygon[-1], 1, Color.BLUE)

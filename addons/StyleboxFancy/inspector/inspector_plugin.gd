@@ -2,10 +2,10 @@ extends EditorInspectorPlugin
 
 const CornerEditor = preload("uid://c0j12lafuf8qy")
 
-func _can_handle(object: Object):
+func _can_handle(object: Object) -> bool:
 	return object is StyleBoxFancy
 
-func _parse_group(object: Object, group: String):
+func _parse_group(object: Object, group: String) -> void:
 	if group == "Corners":
 		add_property_editor_for_multiple_properties(
 			"Corner Properties",
@@ -21,4 +21,3 @@ func _parse_group(object: Object, group: String):
 			],
 			CornerEditor.new()
 		)
-		return true

@@ -7,10 +7,10 @@ extends VBoxContainer
 @export var content_text: RichTextLabel
 @export_tool_button("Set theme") var button = set_themes
 
-func set_themes():
+func set_themes() -> void:
 	var editor_theme: Theme = EditorInterface.get_editor_theme()
 	title_text.add_theme_stylebox_override("normal", editor_theme.get_stylebox("normal", "EditorHelpBitTitle"))
 	content_text.add_theme_stylebox_override("normal", editor_theme.get_stylebox("normal", "EditorHelpBitContent"))
 
-func _ready():
+func _ready() -> void:
 	set_themes()

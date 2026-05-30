@@ -21,10 +21,10 @@ func _on_multi_property_reverted(properties: Array[StringName]) -> void:
 		values.append(get_edited_object().property_get_revert(property))
 	multiple_properties_changed.emit(properties, values, false)
 
-func _set_read_only(_read_only: bool):
+func _set_read_only(_read_only: bool) -> void:
 	_update_property()
 
-func _init():
+func _init() -> void:
 	draw_background = false
 	add_child(controls)
 	set_bottom_editor(controls)
@@ -34,10 +34,10 @@ func _init():
 	controls.multi_property_changed.connect(_on_multi_property_changed)
 	controls.multi_property_reverted.connect(_on_multi_property_reverted)
 
-func _ready():
+func _ready() -> void:
 	controls.set_all_properties(get_edited_object())
 
-func _update_property():
+func _update_property() -> void:
 	if read_only:
 		controls.set_all_properties(get_edited_object())
 		controls.set_read_only(read_only)

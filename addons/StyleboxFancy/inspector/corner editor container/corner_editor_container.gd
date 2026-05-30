@@ -55,7 +55,7 @@ func _get_edited_property_from_node(node: Node) -> StringName:
 		return CORNER_STRINGNAMES[properties_dict[node]]
 	return ""
 
-func _property_changed(value: float, property: StringName):
+func _property_changed(value: float, property: StringName) -> void:
 	if link_button.button_pressed:
 		var values: Array
 		values.resize(4)
@@ -81,7 +81,7 @@ func _property_revert(property: StringName) -> void:
 	else:
 		property_reverted.emit(property)
 
-func _ready():
+func _ready() -> void:
 	_on_radius_tab_button_pressed()
 
 	# Set themes
@@ -127,7 +127,7 @@ func set_all_properties(stylebox: StyleBoxFancy) -> void:
 		if node is Button:
 			node.disabled = !stylebox.property_can_revert(property)
 
-func set_read_only(read_only: bool):
+func set_read_only(read_only: bool) -> void:
 	for node: Node in editable_controls:
 		if node is EditorSpinSlider:
 			node.read_only = read_only

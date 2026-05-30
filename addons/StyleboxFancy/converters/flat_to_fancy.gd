@@ -3,7 +3,7 @@ extends EditorResourceConversionPlugin
 func _handles(resource: Resource) -> bool:
 	return resource is StyleBoxFlat
 
-func _converts_to():
+func _converts_to() -> String:
 	return "StyleBoxFancy"
 
 func _convert(stylebox) -> StyleBoxFancy:
