@@ -1,7 +1,7 @@
 # Fancy Styleboxes
 A powerful StyleBox that fills the gap between Godot's StyleBoxFlat and StyleBoxTexture by combining their features and adding more on its own.
 
-<img src="Assets/cover.png" width=1000>
+<img src="Assets/cover.webp" width=1000>
 
 # Why does this exist?
 There were several occasions where I wanted to create panel designs that sounded quite trivial, like a gradient with rounded corners, but it was impossible to do with either `StyleBoxFlat` or `StyleBoxTexture`. I found myself having to look for alternatives, such as creating a specific texture, using shaders, creating nodes with clip children, or manually drawing my nodes. Each of these options had its drawbacks, so I created my own StyleBox seeking to expand `StyleBoxFlat` functionality to make it a much more flexible tool. 
@@ -20,7 +20,7 @@ The minimum Godot version required is 4.4
 # Usage
 Add a new StyleBoxFancy to a panel or button.
 
-<img src="Assets/properties.png" width=443>
+<img src="Assets/properties.webp" width=443>
 
 StyleBoxFancy comes with similar properties as StyleBoxFlat such as:
 * `Color`
@@ -41,7 +41,7 @@ You can also **convert** a `StyleBoxFlat` or `StyleBoxTexture` *(to a minor degr
 
 ## Texture
 
-<img src="Assets/texture.png" width=436>
+<img src="Assets/texture.webp" width=436>
 
 Allows you to apply a `Texture2D` to your panel, it is compatible with rounded corners and antialiasing. A common use for this is creating a rounded panel with a `GradientTexture2D` which is not possible using Godot's StyleBoxes.
 
@@ -63,7 +63,7 @@ Sets the repeating mode that the texture will use, this overrides the entire `Ca
 > [!WARNING]
 > This feature is **experimental** due to how StyleBoxes access the material property of the `CanvasItem` and has some caveats, shouldn't break anything but use at your own risk.
 
-<img src="Assets/material.png" width=446>
+<img src="Assets/material.webp" width=446>
 
 Overrides the `CanvasItem` material that uses this StyleBox. It accept `CanvasItemMaterial` and `ShaderMaterial` as valid materials.
 
@@ -74,7 +74,7 @@ Overrides the `CanvasItem` material that uses this StyleBox. It accept `CanvasIt
 
 ## Corners
 
-<img src="Assets/corner radius.png" width=424>
+<img src="Assets/corner radius.webp" width=424>
 
 This plugin comes with its own inspector for corner editing for ease of use and compactness.
 * **Linking** allows you to set all corner values at the same time.
@@ -83,7 +83,7 @@ This plugin comes with its own inspector for corner editing for ease of use and 
 
 ### Corner curvature
 
-<img src="Assets/corner curvature.png" width=422>
+<img src="Assets/corner curvature.webp" width=422>
 
 Allows you to change the corner shape based on a [superellipse](https://en.wikipedia.org/wiki/Superellipse) formula.
 
@@ -94,13 +94,13 @@ Different curvature values give different corner shapes:
 * **-1:** Scoop
 * **-2:** Reverse Squircle
 
-<img src="Assets/curvatures.png" width=600>
+<img src="Assets/curvatures.webp" width=600>
 
 Positive values make outward curves that get closer to a square at high values and negative values makes inward curves.
 
 
 ## Shadow
-<img src="Assets/shadow.png" width=436>
+<img src="Assets/shadow.webp" width=436>
 
 Shadow has a dedicated `enabled` property that allows using shadows with 0 `blur`.
 
@@ -111,7 +111,7 @@ The `spread` property will expand or shrink the shadow compared to its original 
 
 `StyleBoxFancy` implements borders as a list of `StyleBorder` so you can have more than 1 border, each `StyleBorder` has its own properties and are drawn stacked one on top of another. It includes the same properties as `StyleBoxFlat`'s border.
 
-<img src="Assets/borders.png" width=441>
+<img src="Assets/borders.webp" width=441>
 
 ### Texture
 Allows you to apply a `Texture2D` to your border.
