@@ -133,4 +133,4 @@ func set_read_only(read_only: bool) -> void:
 			node.read_only = read_only
 
 		elif node is Button:
-			node.disabled = true
+			node.disabled = read_only
