@@ -58,7 +58,7 @@ var _corner_geometry: Array[PackedVector2Array]
 #region Properties
 ## The background color of this stylebox.
 ## Modulates [member texture] if it is set.
-@export var color: Color = Color(0.6, 0.6, 0.6):
+@export var color: Color = Color(1.0, 1.0, 1.0, 1.0):
 	set(v):
 		color = v
 		emit_changed()

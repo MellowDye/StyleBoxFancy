@@ -4,7 +4,7 @@ extends Resource
 class_name StyleBorder
 
 ## Sets the border color. Modulates [param texture] if it is set.
-@export var color: Color = Color(0.8, 0.8, 0.8):
+@export var color: Color = Color(1.0, 1.0, 1.0, 1.0):
 	set(v):
 		color = v
 		emit_changed()
