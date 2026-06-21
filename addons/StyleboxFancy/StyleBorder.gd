@@ -1,4 +1,5 @@
 @tool
+@icon("uid://bvvu8c56q60gy")
 extends Resource
 class_name StyleBorder
 

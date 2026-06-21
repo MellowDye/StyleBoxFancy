@@ -1,4 +1,5 @@
 @tool
+@icon("uid://ds1a2dtd5mvjg")
 extends StyleBox
 class_name StyleBoxFancy
 
