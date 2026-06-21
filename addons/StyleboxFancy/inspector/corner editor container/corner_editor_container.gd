@@ -84,7 +84,6 @@ func _property_revert(property: StringName) -> void:
 
 func _ready() -> void:
 	_on_radius_tab_button_pressed()
-	print(linked_corners)
 	link_button.button_pressed = linked_corners
 
 	# Set themes
