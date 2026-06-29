@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://df2kverp315t8"]
+[gd_scene format=3 uid="uid://df2kverp315t8"]
 
 [ext_resource type="Script" uid="uid://dsf52vsvsogxb" path="res://addons/StyleboxFancy/inspector/corner editor container/corner_editor_container.gd" id="1_r6tm4"]
 [ext_resource type="Script" uid="uid://cqtss7efnhjtg" path="res://addons/StyleboxFancy/inspector/corner editor container/tooltip_button.gd" id="2_f6m2c"]
@@ -13,56 +13,38 @@
 [sub_resource type="ButtonGroup" id="ButtonGroup_stc0f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nrcq3"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.0936472, 0.0908234, 0.0978822, 1)
-border_color = Color(0.04, 0.04, 0.04, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_detail = 3
-anti_aliasing = false
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.09082824, 0.07057932, 0.097156346, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_detail = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rx5ek"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.0558825, 0.052941, 0.060294, 1)
-border_color = Color(0, 0, 0, 1)
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 3
-anti_aliasing = false
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.103236504, 0.07181999, 0.113054655, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
 
-[sub_resource type="Image" id="Image_vkubq"]
-data = {
-"data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 255, 92, 92, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 255, 93, 93, 255, 255, 92, 92, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 92, 92, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 92, 92, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 231, 255, 90, 90, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 90, 90, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 42, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 42, 255, 93, 93, 233, 255, 92, 92, 232, 255, 93, 93, 41, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 42, 255, 93, 93, 233, 255, 92, 92, 232, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 45, 255, 93, 93, 44, 0, 0, 0, 0, 255, 91, 91, 42, 255, 91, 91, 42, 0, 0, 0, 0, 255, 91, 91, 45, 255, 93, 93, 44, 0, 0, 0, 0, 255, 91, 91, 42, 255, 91, 91, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 45, 255, 92, 92, 235, 255, 92, 92, 234, 255, 89, 89, 43, 0, 0, 0, 0, 0, 0, 0, 0, 255, 91, 91, 45, 255, 92, 92, 235, 255, 92, 92, 234, 255, 89, 89, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 92, 92, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 91, 91, 59, 255, 92, 92, 61, 255, 92, 92, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 91, 91, 59, 255, 92, 92, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u11jr"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.09444785, 0.068823755, 0.10245578, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
 
-[sub_resource type="ImageTexture" id="ImageTexture_u11jr"]
-image = SubResource("Image_vkubq")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwy2h"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.037255, 0.035294, 0.040196, 1)
-border_color = Color(0.14902, 0.141176, 0.160784, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 3
-anti_aliasing = false
-
-[node name="CornerEditorContainer" type="VBoxContainer" node_paths=PackedStringArray("panel", "radius_controls", "curvature_controls", "link_button", "properties_dict", "editable_controls")]
+[node name="CornerEditorContainer" type="VBoxContainer" unique_id=566081280 node_paths=PackedStringArray("panel", "radius_controls", "curvature_controls", "link_button", "properties_dict", "editable_controls")]
 offset_right = 252.0
 offset_bottom = 101.0
 script = ExtResource("1_r6tm4")
@@ -86,11 +68,11 @@ NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature sli
 }
 editable_controls = [NodePath("PanelContainer/Radius controls/Top left corner/TL revert button"), NodePath("PanelContainer/Radius controls/Top left corner/TL radius spinbox"), NodePath("PanelContainer/Radius controls/Top right corner/TR revert button"), NodePath("PanelContainer/Radius controls/Top right corner/TR radius spinbox"), NodePath("PanelContainer/Radius controls/Bottom left corner/BL revert button"), NodePath("PanelContainer/Radius controls/Bottom left corner/BL radius spinbox"), NodePath("PanelContainer/Radius controls/Bottom right corner/BR revert button"), NodePath("PanelContainer/Radius controls/Bottom right corner/BR radius spinbox"), NodePath("PanelContainer/Curvature controls/Top left corner/TL curvature preset button"), NodePath("PanelContainer/Curvature controls/Top left corner/TL curvature slider"), NodePath("PanelContainer/Curvature controls/Top right corner/TR curvature preset button"), NodePath("PanelContainer/Curvature controls/Top right corner/TR curvature slider"), NodePath("PanelContainer/Curvature controls/Bottom left corner/BL curvature preset button"), NodePath("PanelContainer/Curvature controls/Bottom left corner/BL curvature slider"), NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature preset button"), NodePath("PanelContainer/Curvature controls/Bottom right corner/BR curvature slider")]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1777884790]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RadiusTabButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("tooltip")]
+[node name="RadiusTabButton" type="Button" parent="HBoxContainer" unique_id=1792257446 node_paths=PackedStringArray("tooltip")]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "[b]a[/b]"
@@ -101,7 +83,7 @@ text = "Radius"
 script = ExtResource("2_f6m2c")
 tooltip = NodePath("Tooltip")
 
-[node name="Tooltip" parent="HBoxContainer/RadiusTabButton" instance=ExtResource("3_nrcq3")]
+[node name="Tooltip" parent="HBoxContainer/RadiusTabButton" unique_id=2076421092 instance=ExtResource("3_nrcq3")]
 visible = false
 layout_mode = 0
 offset_top = 113.0
@@ -118,7 +100,7 @@ text = "Edit the radius of each corner, if value is 0 the corner will not be rou
 
 Click on the corner icon to reset its value."
 
-[node name="CurvatureTabButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("tooltip")]
+[node name="CurvatureTabButton" type="Button" parent="HBoxContainer" unique_id=1409957781 node_paths=PackedStringArray("tooltip")]
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
@@ -127,7 +109,7 @@ text = "Curvature"
 script = ExtResource("2_f6m2c")
 tooltip = NodePath("Tooltip")
 
-[node name="Tooltip" parent="HBoxContainer/CurvatureTabButton" instance=ExtResource("3_nrcq3")]
+[node name="Tooltip" parent="HBoxContainer/CurvatureTabButton" unique_id=1633456063 instance=ExtResource("3_nrcq3")]
 visible = false
 layout_mode = 0
 offset_left = -114.0
@@ -162,29 +144,29 @@ value were 1.
 
 [b]Notch:[/b] Makes a square cut inside the corner."
 
-[node name="LinkButton" type="Button" parent="HBoxContainer"]
+[node name="LinkButton" type="Button" parent="HBoxContainer" unique_id=1322523432]
 layout_mode = 2
 tooltip_text = "Link/Unlink Corner Values"
 toggle_mode = true
-icon = SubResource("ImageTexture_u11jr")
+button_pressed = true
 icon_alignment = 1
 script = ExtResource("3_u8m6u")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2078558624]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_jwy2h")
+theme_override_styles/panel = SubResource("StyleBoxFlat_u11jr")
 
-[node name="Radius controls" type="GridContainer" parent="PanelContainer"]
+[node name="Radius controls" type="GridContainer" parent="PanelContainer" unique_id=1406839826]
 layout_mode = 2
 columns = 2
 
-[node name="Top left corner" type="HBoxContainer" parent="PanelContainer/Radius controls"]
+[node name="Top left corner" type="HBoxContainer" parent="PanelContainer/Radius controls" unique_id=1214706037]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TL revert button" type="Button" parent="PanelContainer/Radius controls/Top left corner"]
+[node name="TL revert button" type="Button" parent="PanelContainer/Radius controls/Top left corner" unique_id=364515204]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Top left
@@ -194,20 +176,20 @@ icon = ExtResource("2_u8m6u")
 flat = true
 icon_alignment = 1
 
-[node name="TL radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Top left corner"]
+[node name="TL radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Top left corner" unique_id=820393359]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_greater = true
 suffix = "px"
 editing_integer = true
 
-[node name="Top right corner" type="HBoxContainer" parent="PanelContainer/Radius controls"]
+[node name="Top right corner" type="HBoxContainer" parent="PanelContainer/Radius controls" unique_id=960100674]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TR revert button" type="Button" parent="PanelContainer/Radius controls/Top right corner"]
+[node name="TR revert button" type="Button" parent="PanelContainer/Radius controls/Top right corner" unique_id=999905298]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Top right
@@ -217,20 +199,20 @@ icon = ExtResource("5_q644r")
 flat = true
 icon_alignment = 1
 
-[node name="TR radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Top right corner"]
+[node name="TR radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Top right corner" unique_id=540016085]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_greater = true
 suffix = "px"
 editing_integer = true
 
-[node name="Bottom left corner" type="HBoxContainer" parent="PanelContainer/Radius controls"]
+[node name="Bottom left corner" type="HBoxContainer" parent="PanelContainer/Radius controls" unique_id=1431317438]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="BL revert button" type="Button" parent="PanelContainer/Radius controls/Bottom left corner"]
+[node name="BL revert button" type="Button" parent="PanelContainer/Radius controls/Bottom left corner" unique_id=1859451339]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Bottom left
@@ -240,20 +222,20 @@ icon = ExtResource("6_f6m2c")
 flat = true
 icon_alignment = 1
 
-[node name="BL radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Bottom left corner"]
+[node name="BL radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Bottom left corner" unique_id=234163723]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_greater = true
 suffix = "px"
 editing_integer = true
 
-[node name="Bottom right corner" type="HBoxContainer" parent="PanelContainer/Radius controls"]
+[node name="Bottom right corner" type="HBoxContainer" parent="PanelContainer/Radius controls" unique_id=695489408]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="BR revert button" type="Button" parent="PanelContainer/Radius controls/Bottom right corner"]
+[node name="BR revert button" type="Button" parent="PanelContainer/Radius controls/Bottom right corner" unique_id=1856105933]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Bottom right
@@ -263,25 +245,25 @@ icon = ExtResource("7_nrcq3")
 flat = true
 icon_alignment = 1
 
-[node name="BR radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Bottom right corner"]
+[node name="BR radius spinbox" type="EditorSpinSlider" parent="PanelContainer/Radius controls/Bottom right corner" unique_id=1061113334]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_greater = true
 suffix = "px"
 editing_integer = true
 
-[node name="Curvature controls" type="GridContainer" parent="PanelContainer"]
+[node name="Curvature controls" type="GridContainer" parent="PanelContainer" unique_id=250268727]
 visible = false
 layout_mode = 2
 columns = 2
 
-[node name="Top left corner" type="HBoxContainer" parent="PanelContainer/Curvature controls"]
+[node name="Top left corner" type="HBoxContainer" parent="PanelContainer/Curvature controls" unique_id=353356129]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TL curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Top left corner" node_paths=PackedStringArray("popup_menu", "curvature_slider")]
+[node name="TL curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Top left corner" unique_id=1056196014 node_paths=PackedStringArray("popup_menu", "curvature_slider")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Top left
@@ -294,7 +276,7 @@ script = ExtResource("8_f6m2c")
 popup_menu = NodePath("TL Curvature presets popup")
 curvature_slider = NodePath("../TL curvature slider")
 
-[node name="TL Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Top left corner/TL curvature preset button"]
+[node name="TL Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" unique_id=1074971328]
 item_count = 6
 item_0/text = "Round"
 item_0/id = 0
@@ -309,7 +291,7 @@ item_4/id = 4
 item_5/text = "Notch"
 item_5/id = 5
 
-[node name="TL curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Top left corner"]
+[node name="TL curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Top left corner" unique_id=1230563906]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = -7.0
@@ -317,13 +299,13 @@ max_value = 7.0
 step = 0.005
 value = 1.0
 
-[node name="Top right corner" type="HBoxContainer" parent="PanelContainer/Curvature controls"]
+[node name="Top right corner" type="HBoxContainer" parent="PanelContainer/Curvature controls" unique_id=1086117828]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TR curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Top right corner" node_paths=PackedStringArray("popup_menu", "curvature_slider")]
+[node name="TR curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Top right corner" unique_id=1223129536 node_paths=PackedStringArray("popup_menu", "curvature_slider")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Top right
@@ -336,7 +318,7 @@ script = ExtResource("8_f6m2c")
 popup_menu = NodePath("TR Curvature presets popup")
 curvature_slider = NodePath("../TR curvature slider")
 
-[node name="TR Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Top right corner/TR curvature preset button"]
+[node name="TR Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Top right corner/TR curvature preset button" unique_id=1805137586]
 auto_translate_mode = 1
 item_count = 6
 item_0/text = "Round"
@@ -352,7 +334,7 @@ item_4/id = 4
 item_5/text = "Notch"
 item_5/id = 5
 
-[node name="TR curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Top right corner"]
+[node name="TR curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Top right corner" unique_id=653290790]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = -7.0
@@ -360,13 +342,13 @@ max_value = 7.0
 step = 0.005
 value = 1.0
 
-[node name="Bottom left corner" type="HBoxContainer" parent="PanelContainer/Curvature controls"]
+[node name="Bottom left corner" type="HBoxContainer" parent="PanelContainer/Curvature controls" unique_id=45088029]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="BL curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Bottom left corner" node_paths=PackedStringArray("popup_menu", "curvature_slider")]
+[node name="BL curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Bottom left corner" unique_id=1985793288 node_paths=PackedStringArray("popup_menu", "curvature_slider")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Bottom left
@@ -379,7 +361,7 @@ script = ExtResource("8_f6m2c")
 popup_menu = NodePath("BL Curvature presets popup")
 curvature_slider = NodePath("../BL curvature slider")
 
-[node name="BL Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Bottom left corner/BL curvature preset button"]
+[node name="BL Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Bottom left corner/BL curvature preset button" unique_id=1747651403]
 auto_translate_mode = 1
 item_count = 6
 item_0/text = "Round"
@@ -395,7 +377,7 @@ item_4/id = 4
 item_5/text = "Notch"
 item_5/id = 5
 
-[node name="BL curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Bottom left corner"]
+[node name="BL curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Bottom left corner" unique_id=1375102167]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = -7.0
@@ -403,13 +385,13 @@ max_value = 7.0
 step = 0.005
 value = 1.0
 
-[node name="Bottom right corner" type="HBoxContainer" parent="PanelContainer/Curvature controls"]
+[node name="Bottom right corner" type="HBoxContainer" parent="PanelContainer/Curvature controls" unique_id=435387191]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="BR curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Bottom right corner" node_paths=PackedStringArray("popup_menu", "curvature_slider")]
+[node name="BR curvature preset button" type="Button" parent="PanelContainer/Curvature controls/Bottom right corner" unique_id=1137253151 node_paths=PackedStringArray("popup_menu", "curvature_slider")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 tooltip_text = "Bottom right
@@ -422,7 +404,7 @@ script = ExtResource("8_f6m2c")
 popup_menu = NodePath("BR Curvature presets popup")
 curvature_slider = NodePath("../BR curvature slider")
 
-[node name="BR Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Bottom right corner/BR curvature preset button"]
+[node name="BR Curvature presets popup" type="PopupMenu" parent="PanelContainer/Curvature controls/Bottom right corner/BR curvature preset button" unique_id=372743881]
 auto_translate_mode = 1
 item_count = 6
 item_0/text = "Round"
@@ -438,7 +420,7 @@ item_4/id = 4
 item_5/text = "Notch"
 item_5/id = 5
 
-[node name="BR curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Bottom right corner"]
+[node name="BR curvature slider" type="EditorSpinSlider" parent="PanelContainer/Curvature controls/Bottom right corner" unique_id=958227940]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = -7.0
@@ -448,7 +430,7 @@ value = 1.0
 
 [connection signal="pressed" from="HBoxContainer/RadiusTabButton" to="." method="_on_radius_tab_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CurvatureTabButton" to="." method="_on_curvature_tab_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/LinkButton" to="." method="_on_link_button_pressed"]
+[connection signal="toggled" from="HBoxContainer/LinkButton" to="." method="_on_link_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/LinkButton" to="HBoxContainer/LinkButton" method="_on_toggled"]
 [connection signal="pressed" from="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" to="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" method="_on_pressed"]
 [connection signal="index_pressed" from="PanelContainer/Curvature controls/Top left corner/TL curvature preset button/TL Curvature presets popup" to="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" method="_on_popup_index_pressed"]
