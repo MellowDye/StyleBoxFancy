@@ -135,9 +135,9 @@ var _corner_geometry: Array[PackedVector2Array]
 		emit_changed()
 
 ## Scales the texture, its behaviour depends on [member texture_stretch_mode].
-@export var texture_scale: float = 1.0:
+@export_range(0.001,5.0,0.001,"or_less","or_greater") var texture_scale: float = 1.0:
 	set(v):
-		texture_scale = max(v, 0.001)
+		texture_scale = maxf(v, 0.001)
 		emit_changed()
 #endregion
 
@@ -215,7 +215,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## Expands the stylebox rect outside of the control rect on the left edge,
 ## and allows negative values (but it wont draw if the rect size is negative). [br]
 ## See [member StyleBoxFlat.expand_margin_left] for more details.
-@export var expand_margin_left: float:
+@export_range(0.0, 100.0, 1.0, "suffix:px", "or_less", "or_greater") var expand_margin_left: float:
 	set(v):
 		expand_margin_left = v
 		emit_changed()
@@ -223,7 +223,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## Expands the stylebox rect outside of the control rect on the top edge,
 ## and allows negative values (but it wont draw if the rect size is negative). [br]
 ## See [member StyleBoxFlat.expand_margin_left] for more details.
-@export var expand_margin_top: float:
+@export_range(0.0, 100.0, 1.0, "suffix:px", "or_less", "or_greater") var expand_margin_top: float:
 	set(v):
 		expand_margin_top = v
 		emit_changed()
@@ -231,7 +231,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## Expands the stylebox rect outside of the control rect on the right edge,
 ## and allows negative values (but it wont draw if the rect size is negative). [br]
 ## See [member StyleBoxFlat.expand_margin_left] for more details.
-@export var expand_margin_right: float:
+@export_range(0.0, 100.0, 1.0, "suffix:px", "or_less", "or_greater") var expand_margin_right: float:
 	set(v):
 		expand_margin_right = v
 		emit_changed()
@@ -239,7 +239,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## Expands the stylebox rect outside of the control rect on the bottom edge,
 ## and allows negative values (but it wont draw if the rect size is negative). [br]
 ## See [member StyleBoxFlat.expand_margin_left] for more details.
-@export var expand_margin_bottom: float:
+@export_range(0.0, 100.0, 1.0, "suffix:px", "or_less", "or_greater") var expand_margin_bottom: float:
 	set(v):
 		expand_margin_bottom = v
 		emit_changed()
@@ -266,13 +266,13 @@ var _corner_geometry: Array[PackedVector2Array]
 		emit_changed()
 
 ## Sets the amount of blur the shadow will have.
-@export_range(0, 1, 1, "or_greater") var shadow_blur: int = 1:
+@export_range(0, 1, 1, "suffix:px", "or_greater") var shadow_blur: int = 1:
 	set(v):
 		shadow_blur = v
 		emit_changed()
 
 ## Offsets the shadow's rect relative to the stylebox.
-@export var shadow_offset: Vector2:
+@export_custom(PROPERTY_HINT_NONE,"suffix:px") var shadow_offset: Vector2:
 	set(v):
 		shadow_offset = v
 		emit_changed()
@@ -280,7 +280,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## Sets the size relative to the stylebox, higher values will extend the shadow's rect
 ## and smaller values will shrink it. [br] [br]
 ## [b]Note:[/b] if the rect is too small it wont draw.
-@export_custom(PROPERTY_HINT_LINK, "") var shadow_spread: Vector2:
+@export_custom(PROPERTY_HINT_LINK, "suffix:px") var shadow_spread: Vector2:
 	set(v):
 		shadow_spread = v
 		emit_changed()
@@ -297,7 +297,7 @@ var _corner_geometry: Array[PackedVector2Array]
 
 ## Changes the size of the antialiasing effect. [code]1.0[/code] is recommended.
 ## See [member StyleBoxFlat.anti_aliasing_size] for more details.
-@export var anti_aliasing_size: float = 1.0:
+@export_range(0.01,10.0,0.001,"suffix:px","or_less","or_greater") var anti_aliasing_size: float = 1.0:
 	set(v):
 		anti_aliasing_size = v
 		emit_changed()
@@ -374,7 +374,7 @@ func _generate_corner_geometry(corner_curvatures: Vector4) -> void:
 			quadrant_points = _superellipse_quadrant(curvature, corner_detail)
 			_quadrant_cache[curvature] = quadrant_points
 
-		var sign = sign(curvature)
+		var sign : int = signi(curvature)
 		if curvature == 0:
 			sign = -1
 
@@ -453,7 +453,7 @@ func _draw_ring(
 	if inner_rect.abs().encloses(outer_rect):
 		return
 
-	var inner_corner_radius = _adjust_corner_radius(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
+	var inner_corner_radius : Vector4 = _adjust_corner_radius(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
 
 	var inner_points: PackedVector2Array = _get_rounded_rect(inner_rect, inner_corner_radius)
 	var outer_points: PackedVector2Array = _get_rounded_rect(outer_rect, corner_radius)
@@ -806,8 +806,8 @@ func _get_polygon_uv(
 
 	var uvs: PackedVector2Array
 	uvs.resize(polygon.size())
-	var tex_size = texture.get_size()
-	var rect_size = rect.size
+	var tex_size: Vector2 = texture.get_size()
+	var rect_size: Vector2 = rect.size
 
 	var scale: Vector2 = Vector2.ONE
 	var offset: Vector2 = Vector2.ZERO
@@ -872,7 +872,7 @@ func _get_polygon_uv(
 func _fit_corner_radius_in_rect(corners: Vector4, rect: Rect2) -> Vector4:
 	var adjusted: Vector4
 
-	var scale = min(
+	var scale : float = min(
 		1,
 		rect.size.x / (corners[0] + corners[1]),
 		rect.size.y / (corners[1] + corners[2]),
@@ -887,7 +887,7 @@ func _fit_corner_radius_in_rect(corners: Vector4, rect: Rect2) -> Vector4:
 
 
 func _draw_debug_rect(to_canvas_item, rect) -> void:
-	var points = _get_points_from_rect(rect)
+	var points : PackedVector2Array = _get_points_from_rect(rect)
 	RenderingServer.canvas_item_add_polyline(to_canvas_item, points, [Color.AQUA])
 
 func _draw_debug_polygon(to_canvas_item: RID, polygon: PackedVector2Array) -> void:
@@ -906,14 +906,14 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	if not rect.has_area():
 		return
 
-	var corner_radii: Vector4 = Vector4(
+	var corner_radii := Vector4(
 		corner_radius_top_left,
 		corner_radius_top_right,
 		corner_radius_bottom_right,
 		corner_radius_bottom_left,
 	)
 
-	var corner_curvatures: Vector4 = Vector4(
+	var corner_curvatures := Vector4(
 		corner_curvature_top_left,
 		corner_curvature_top_right,
 		corner_curvature_bottom_right,

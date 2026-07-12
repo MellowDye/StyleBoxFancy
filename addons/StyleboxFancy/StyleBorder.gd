@@ -60,28 +60,28 @@ class_name StyleBorder
 
 ## Moves the left edge inwards leaving an empty area behind, or outwards if it is set with
 ## a negative value.
-@export var inset_left: int:
+@export_custom(PROPERTY_HINT_NONE,"suffix:px") var inset_left: int:
 	set(v):
 		inset_left = v
 		emit_changed()
 
 ## Moves the top edge inwards leaving an empty area behind, or outwards if it is set with
 ## a negative value.
-@export var inset_top: int:
+@export_custom(PROPERTY_HINT_NONE,"suffix:px") var inset_top: int:
 	set(v):
 		inset_top = v
 		emit_changed()
 
 ## Moves the right edge inwards leaving an empty area behind, or outwards if it is set with
 ## a negative value.
-@export var inset_right: int:
+@export_custom(PROPERTY_HINT_NONE,"suffix:px") var inset_right: int:
 	set(v):
 		inset_right = v
 		emit_changed()
 
 ## Moves the bottom edge inwards leaving an empty area behind, or outwards if it is set with
 ## a negative value.
-@export var inset_bottom: int:
+@export_custom(PROPERTY_HINT_NONE,"suffix:px") var inset_bottom: int:
 	set(v):
 		inset_bottom = v
 		emit_changed()
