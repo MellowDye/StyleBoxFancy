@@ -85,7 +85,7 @@ func _property_revert(property: StringName) -> void:
 func _ready() -> void:
 	_on_radius_tab_button_pressed()
 	link_button.button_pressed = linked_corners
-	
+
 	# Set themes
 	var editor_theme : Theme = EditorInterface.get_editor_theme()
 	panel.add_theme_stylebox_override("panel", editor_theme.get_stylebox("child_bg", "EditorProperty"))

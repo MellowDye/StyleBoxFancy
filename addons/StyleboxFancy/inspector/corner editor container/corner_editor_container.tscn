@@ -430,7 +430,7 @@ value = 1.0
 
 [connection signal="pressed" from="HBoxContainer/RadiusTabButton" to="." method="_on_radius_tab_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CurvatureTabButton" to="." method="_on_curvature_tab_button_pressed"]
-[connection signal="toggled" from="HBoxContainer/LinkButton" to="." method="_on_link_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/LinkButton" to="." method="_on_link_button_toggled" flags=3]
 [connection signal="toggled" from="HBoxContainer/LinkButton" to="HBoxContainer/LinkButton" method="_on_toggled"]
 [connection signal="pressed" from="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" to="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" method="_on_pressed"]
 [connection signal="index_pressed" from="PanelContainer/Curvature controls/Top left corner/TL curvature preset button/TL Curvature presets popup" to="PanelContainer/Curvature controls/Top left corner/TL curvature preset button" method="_on_popup_index_pressed"]
