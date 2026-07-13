@@ -189,24 +189,28 @@ var _corner_geometry: Array[PackedVector2Array]
 @export_storage var corner_curvature_top_left: float = 1:
 	set(v):
 		corner_curvature_top_left = v
+		_generate_corner_geometry()
 		emit_changed()
 
 ## The top-right corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_top_right: float = 1:
 	set(v):
 		corner_curvature_top_right = v
+		_generate_corner_geometry()
 		emit_changed()
 
 ## The bottom-right corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_bottom_right: float = 1:
 	set(v):
 		corner_curvature_bottom_right = v
+		_generate_corner_geometry()
 		emit_changed()
 
 ## The bottom-left corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_bottom_left: float = 1:
 	set(v):
 		corner_curvature_bottom_left = v
+		_generate_corner_geometry()
 		emit_changed()
 #endregion
 
@@ -352,7 +356,14 @@ func _transform_points(points: PackedVector2Array, transform_vector: Vector2) ->
 		out.append(p * transform_vector)
 	return out
 
-func _generate_corner_geometry(corner_curvatures: Vector4) -> void:
+func _generate_corner_geometry() -> void:
+	var corner_curvatures := Vector4(
+		corner_curvature_top_left,
+		corner_curvature_top_right,
+		corner_curvature_bottom_right,
+		corner_curvature_bottom_left,
+	)
+
 	var transforms: PackedVector2Array = [
 		Vector2(-1, -1),
 		Vector2(1, -1),
@@ -899,14 +910,8 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 		corner_radius_bottom_left,
 	)
 
-	var corner_curvatures := Vector4(
-		corner_curvature_top_left,
-		corner_curvature_top_right,
-		corner_curvature_bottom_right,
-		corner_curvature_bottom_left,
-	)
-
-	_generate_corner_geometry(corner_curvatures)
+	if _corner_geometry.is_empty():
+		_generate_corner_geometry()
 
 	if texture_repeat != TextureRepeatMode.INHERIT:
 		RenderingServer.canvas_item_set_default_texture_repeat(
