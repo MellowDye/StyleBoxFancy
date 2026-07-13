@@ -85,14 +85,14 @@ func _property_revert(property: StringName) -> void:
 func _ready() -> void:
 	_on_radius_tab_button_pressed()
 	link_button.button_pressed = linked_corners
-
+	
 	# Set themes
-	var editor_theme = EditorInterface.get_editor_theme()
+	var editor_theme : Theme = EditorInterface.get_editor_theme()
 	panel.add_theme_stylebox_override("panel", editor_theme.get_stylebox("child_bg", "EditorProperty"))
 
 	# Connect signals
 	for node: Node in properties_dict:
-		var property = _get_edited_property_from_node(node)
+		var property : StringName = _get_edited_property_from_node(node)
 		if node is EditorSpinSlider:
 			if not node.value_changed.is_connected(_property_changed):
 				node.value_changed.connect(_property_changed.bind(property))
@@ -117,7 +117,7 @@ func set_all_properties(stylebox: StyleBoxFancy) -> void:
 	if stylebox == null: return
 
 	for node: Node in properties_dict:
-		var property = _get_edited_property_from_node(node)
+		var property : StringName = _get_edited_property_from_node(node)
 		if node is EditorSpinSlider:
 			node.set_value_no_signal(stylebox.get(property))
 		if node is Button:
