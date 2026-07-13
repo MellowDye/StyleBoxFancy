@@ -675,78 +675,64 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 # outer/inner_size refers to the vertices count of the ring
 func _triangulate_ring(outer_size: int, inner_size: int, outer_corner_radii: Vector4, inner_corner_radii: Vector4) -> PackedInt32Array:
 	# Triangle amount calc
-	var total_triangles: int = 0
-	for corner_idx: int in 4:
-		var is_rounded: bool = outer_corner_radii[corner_idx] != 0
-		var inner_is_point: bool = inner_corner_radii[corner_idx] == 0
+	# It always has a minimum of 8
+	var triangles: int = 8
+	for corner_idx in 4:
+		# If the inner corner is round you can asume the outer is too
+		if inner_corner_radii[corner_idx] != 0:
+			triangles += corner_detail * 2
+		# If not, if the outer corner is round it connects its triangles to the same point
+		elif outer_corner_radii[corner_idx] != 0:
+			triangles += corner_detail
 
-		if is_rounded:
-			if inner_is_point:
-				# Triangle per detail
-				total_triangles += corner_detail + 2
-			else:
-				# Quad per detail
-				total_triangles += (corner_detail + 1) * 2
-		else:
-			# Square corner
-			total_triangles += 2
-
-	var triangles: PackedInt32Array
-	triangles.resize(total_triangles * 3)
+	var indices: PackedInt32Array
+	indices.resize(triangles * 3)
 
 	# Triangulation
-	var tri_idx: int = 0
+	var indices_idx: int = 0
 	var inner_idx: int = 0
-	var outer_idx: int = 0
+	var outer_idx: int = inner_size
 
-	for corner_idx: int in 4:
-		var is_rounded: bool = outer_corner_radii[corner_idx] != 0
-		var inner_is_point: bool = inner_corner_radii[corner_idx] == 0
+	for corner_idx in 4:
+		# Same logic as for the triangle count
+		if inner_corner_radii[corner_idx] != 0:
+			for i in corner_detail:
+				indices[indices_idx] = inner_idx
+				indices[indices_idx + 1] = outer_idx
+				indices[indices_idx + 2] = inner_idx + 1
+				indices[indices_idx + 3] = outer_idx
+				indices[indices_idx + 4] = inner_idx + 1
+				indices[indices_idx + 5] = outer_idx + 1
 
-		if is_rounded:
-			if inner_is_point:
-				# FIll using triangles
-				for i in corner_detail:
-					triangles[tri_idx] = inner_idx
-					triangles[tri_idx + 1] = outer_idx + inner_size
-					triangles[tri_idx + 2] = (outer_idx + 1) % outer_size + inner_size
-					tri_idx += 3
-					outer_idx += 1
-			else:
-				# Fill using quads
-				for i in corner_detail:
-					var next_inner: int = (inner_idx + 1) % inner_size
-					var next_outer: int = (outer_idx + 1) % outer_size + inner_size
-					var curr_outer: int = outer_idx + inner_size
+				indices_idx += 6
+				inner_idx += 1
+				outer_idx += 1
 
-					triangles[tri_idx] = inner_idx
-					triangles[tri_idx + 1] = curr_outer
-					triangles[tri_idx + 2] = next_outer
-					triangles[tri_idx + 3] = inner_idx
-					triangles[tri_idx + 4] = next_inner
-					triangles[tri_idx + 5] = next_outer
+		elif outer_corner_radii[corner_idx] != 0:
+			for i in corner_detail:
+				indices[indices_idx] = inner_idx
+				indices[indices_idx + 1] = outer_idx
+				indices[indices_idx + 2] = outer_idx + 1
 
-					tri_idx += 6
-					inner_idx += 1
-					outer_idx += 1
+				indices_idx += 3
+				outer_idx += 1
 
-		# Fill to the next corner
-		var next_inner: int = (inner_idx + 1) % inner_size
-		var next_outer: int = (outer_idx + 1) % outer_size + inner_size
-		var curr_outer: int = outer_idx + inner_size
+		# The last one may go out out bounds, so it needs wrap
+		var next_inner_idx: int = wrapi(inner_idx + 1, 0, inner_size)
+		var next_outer_idx: int = wrapi(outer_idx + 1, inner_size, inner_size + outer_size)
 
-		triangles[tri_idx] = inner_idx
-		triangles[tri_idx + 1] = curr_outer
-		triangles[tri_idx + 2] = next_outer
-		triangles[tri_idx + 3] = inner_idx
-		triangles[tri_idx + 4] = next_inner
-		triangles[tri_idx + 5] = next_outer
-		tri_idx += 6
+		indices[indices_idx] = inner_idx
+		indices[indices_idx + 1] = outer_idx
+		indices[indices_idx + 2] = next_inner_idx
+		indices[indices_idx + 3] = outer_idx
+		indices[indices_idx + 4] = next_inner_idx
+		indices[indices_idx + 5] = next_outer_idx
 
+		indices_idx += 6
 		inner_idx += 1
 		outer_idx += 1
 
-	return triangles
+	return indices
 
 
 func _get_faded_color_array(fill_color: Color, opaque: int, transparent: int, inverse: bool = false) -> PackedColorArray:
