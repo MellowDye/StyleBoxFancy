@@ -385,8 +385,10 @@ func _generate_corner_geometry() -> void:
 			quadrant_points = _superellipse_quadrant(curvature, corner_detail)
 			_quadrant_cache[curvature] = quadrant_points
 
-		var sign : int = signi(curvature)
-		if curvature == 0:
+		var sign: int
+		if curvature > 0:
+			sign = 1
+		else:
 			sign = -1
 
 		quadrant_points = _transform_points(
