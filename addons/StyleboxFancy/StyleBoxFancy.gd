@@ -830,21 +830,25 @@ func _get_polygon_uv(
 			var tex_aspect: float = tex_size.x / tex_size.y
 			var rect_aspect: float = rect_size.x / rect_size.y
 
+			scale = rect_size / tex_size
+
 			if tex_aspect > rect_aspect:
-				scale = Vector2(1, 1 / rect_aspect)
+				scale /= rect.size.x / tex_size.x
 			else:
-				scale = Vector2(rect_aspect, 1)
+				scale /= rect.size.y / tex_size.y
+
 			scale /= texture_scale
 
 		TextureStretchMode.KEEP_ASPECT_CENTERED:
 			var tex_aspect: float = tex_size.x / tex_size.y
 			var rect_aspect: float = rect_size.x / rect_size.y
 
+			scale = rect_size / tex_size
+
 			if tex_aspect > rect_aspect:
-				scale = Vector2(1, 1 / rect_aspect)
+				scale /= rect.size.x / tex_size.x
 			else:
-				scale = Vector2(rect_aspect, 1)
-			scale /= texture_scale
+				scale /= rect.size.y / tex_size.y
 
 			offset = (Vector2.ONE - scale) * 0.5
 
@@ -852,10 +856,13 @@ func _get_polygon_uv(
 			var tex_aspect: float = tex_size.x / tex_size.y
 			var rect_aspect: float = rect_size.x / rect_size.y
 
+			scale = rect_size / tex_size
+
 			if tex_aspect > rect_aspect:
-				scale = Vector2(rect_aspect, 1)
+				scale /= rect.size.y / tex_size.y
 			else:
-				scale = Vector2(1, 1 / rect_aspect)
+				scale /= rect.size.x / tex_size.x
+
 			scale /= texture_scale
 			offset = (Vector2.ONE - scale) * 0.5
 
