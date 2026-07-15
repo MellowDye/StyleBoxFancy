@@ -13,8 +13,20 @@ There were several occasions where I wanted to create panel designs that sounded
 * Use corner shapes (round, squircle, bevel, scoop, notch and everything in between).
 * Apply materials (shaders) [EXPERIMENTAL]
 
+
 # Requierements
 The minimum Godot version required is 4.4
+
+# Installation
+## Asset library / Asset store
+* In your godot project open the AssetLib / AssetStore tab and search for "Fancy StyleBoxes".
+* Download and install into your addons folder.
+* Enable the plugin in `Project/Project Settings/Plugins`. **(Don't forget!!)**
+
+## Manual install
+* Download the latest release [here](https://github.com/xZpookyx/StyleBoxFancy/releases).
+* Inside the zip file should be an "addons" folder, uncompress it and move it to your project root folder.
+* Enable the plugin in `Project/Project Settings/Plugins`. **(Don't forget!!)**
 
 
 # Usage
@@ -126,27 +138,12 @@ Allows you to move each side of the border inwards leaving an empty area behind,
 
 
 # Performance
-Compared to `StyleBoxFlat` it is about 8~ times slower, mainly due to it being written in GDScript and not C++
+Compared to `StyleBoxFlat` it is about 6.5~ times slower, mainly due to it being written in GDScript and not C++
 
 This is not a problem for most of use cases as rendering them is not expensive, only games with lots of UI or constant animations may have to consider this.
 
 > [!NOTE]
-> Tested with 1000 panels constantly being redrawn each frame with both StyleBoxes having a border and antialiasing on, using Godot's profiler measuring Frame Time (ms).
+> Tested in Godot 4.7 with 1000 panels constantly being redrawn each frame with both StyleBoxes having a border and antialiasing on, using Godot's profiler measuring Frame Time (ms).
 > * StyleBoxFlat: **34.24 ms**
-> * StyleBoxFancy: **293.82 ms**
+> * StyleBoxFancy: **222.95 ms**
 
-
-# Installation
-## Asset library
-* In your godot project open the AssetLib tab and search for "Fancy StyleBoxes".
-* Download and install into your addons folder.
-* Enable the plugin in `Project/Project Settings/Plugins`.
-
-## Asset store
-* This plugin is now available in the new [Asset store](https://store.godotengine.org/asset/mellowdye/fancy-styleboxes/])!
-* Installation instructions will be updated once it is streamlined.
-
-## Manual install
-* Download the latest release [here](https://github.com/xZpookyx/StyleBoxFancy/releases).
-* Inside the zip file should be an "addons" folder, uncompress it and move it to your project root folder.
-* Enable the plugin in `Project/Project Settings/Plugins`.
