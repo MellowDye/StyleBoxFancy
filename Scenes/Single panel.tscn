@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_4rx3t"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_wmrnq"]
-[ext_resource type="Texture2D" uid="uid://ds1a2dtd5mvjg" path="res://addons/StyleboxFancy/StyleBoxFancy.svg" id="3_wmrnq"]
 
 [sub_resource type="StyleBox" id="StyleBox_wmrnq"]
 resource_local_to_scene = false
@@ -12,22 +11,21 @@ content_margin_top = -1.0
 content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("2_wmrnq")
-color = Color(0.6, 0.6, 0.6, 1)
+color = Color(1, 1, 1, 0.117647)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_4rx3t")]([])
-texture = ExtResource("3_wmrnq")
 texture_stretch_mode = 0
 texture_repeat = 0
 texture_scale = 1.0
 corner_detail = 8
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
-corner_curvature_top_left = 1.0
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_curvature_top_left = 1.335
 corner_curvature_top_right = 1.0
-corner_curvature_bottom_right = 1.0
+corner_curvature_bottom_right = -1.585
 corner_curvature_bottom_left = 1.0
 expand_margin_left = 0.0
 expand_margin_top = 0.0
@@ -38,8 +36,18 @@ shadow_color = Color(0, 0, 0, 0.6)
 shadow_blur = 1
 shadow_offset = Vector2(0, 0)
 shadow_spread = Vector2(0, 0)
-anti_aliasing = true
+anti_aliasing = false
 anti_aliasing_size = 1.0
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4rx3t"]
+bg_color = Color(0.212, 0.53, 0.3763, 0.627451)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 20
+anti_aliasing = false
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -51,9 +59,46 @@ offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
+metadata/_edit_vertical_guides_ = [1.0, 28.0]
+metadata/_edit_horizontal_guides_ = [5.0, 6.0, 1.00205, 2.0, 3.0, 4.0, 9.0]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-offset_right = 533.0
-offset_bottom = 268.0
+offset_top = -3.0
+offset_right = 26.0
+offset_bottom = 6.0
 theme_override_styles/panel = SubResource("StyleBox_wmrnq")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 14.0
+offset_right = -2.0
+offset_bottom = 18.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4rx3t")
+
+[node name="Panel5" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 5.0
+offset_right = -1.0
+offset_bottom = 13.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4rx3t")
+
+[node name="Panel3" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 6.0
+offset_bottom = 7.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4rx3t")
+
+[node name="Panel4" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 5.0
+offset_bottom = 6.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4rx3t")

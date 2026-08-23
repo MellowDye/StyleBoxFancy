@@ -53,7 +53,7 @@ enum TextureRepeatMode {
 
 # Used to save each corner's geometry that is reused for each rounded rect generated
 # as it is scaled depending on the corner radius
-var _corner_geometry: Array[PackedVector2Array]
+#var _corner_geometry: Array[PackedVector2Array]
 
 #region Properties
 ## The background color of this stylebox.
@@ -189,28 +189,24 @@ var _corner_geometry: Array[PackedVector2Array]
 @export_storage var corner_curvature_top_left: float = 1:
 	set(v):
 		corner_curvature_top_left = v
-		_generate_corner_geometry()
 		emit_changed()
 
 ## The top-right corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_top_right: float = 1:
 	set(v):
 		corner_curvature_top_right = v
-		_generate_corner_geometry()
 		emit_changed()
 
 ## The bottom-right corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_bottom_right: float = 1:
 	set(v):
 		corner_curvature_bottom_right = v
-		_generate_corner_geometry()
 		emit_changed()
 
 ## The bottom-left corner shape. See [member corner_curvature_top_left] for more details.
 @export_storage var corner_curvature_bottom_left: float = 1:
 	set(v):
 		corner_curvature_bottom_left = v
-		_generate_corner_geometry()
 		emit_changed()
 #endregion
 
@@ -330,116 +326,34 @@ func _property_get_revert(property: StringName) -> Variant:
 #endregion
 
 #region Draw
-func _superellipse_quadrant(exponent: float, detail: int) -> PackedVector2Array:
+func _get_superellipse_quadrant(quadrant: int, exponent: float, detail: int) -> PackedVector2Array:
+	const HALF_PI: float = PI * 0.5
+	var rotation_quadrant: float = PI + HALF_PI * quadrant
+
 	var n: float = pow(2, abs(exponent))
 	var points: PackedVector2Array
 	points.resize(detail + 1)
 
-	points[0] = Vector2(1, 0)
-	points[-1] = Vector2(0, 1)
+	points[0] = Vector2(0, -1).rotated(rotation_quadrant)
+	points[-1] = Vector2(-1, 0).rotated(rotation_quadrant)
 
-	const HALF_PI: float = PI * 0.5
 	for i: int in range(1, detail):
 		var theta: float = HALF_PI * i / detail
+		var point: Vector2
 
-		var cx: float = cos(theta)
-		var cy: float = sin(theta)
+		if exponent >= 0:
+			point = Vector2(
+				pow(cos(theta), 2 / n),
+				pow(sin(theta), 2 / n),
+			)
+		else:
+			point = Vector2(
+				1 - pow(sin(theta), 2 / n),
+				1 - pow(cos(theta), 2 / n),
+			)
 
-		var x: float = pow(cx, 2.0 / n)
-		var y: float = pow(cy, 2.0 / n)
-		points[i] = Vector2(x, y)
+		points[i] = (point - Vector2.ONE).rotated(rotation_quadrant)
 	return points
-
-func _transform_points(points: PackedVector2Array, transform_vector: Vector2) -> PackedVector2Array:
-	var out: PackedVector2Array
-	for p: Vector2 in points:
-		out.append(p * transform_vector)
-	return out
-
-func _generate_corner_geometry() -> void:
-	var corner_curvatures := Vector4(
-		corner_curvature_top_left,
-		corner_curvature_top_right,
-		corner_curvature_bottom_right,
-		corner_curvature_bottom_left,
-	)
-
-	var transforms: PackedVector2Array = [
-		Vector2(-1, -1),
-		Vector2(1, -1),
-		Vector2(1, 1),
-		Vector2(-1, 1),
-	]
-
-	var _quadrant_cache: Dictionary[float, PackedVector2Array]
-	var geometry_array: Array[PackedVector2Array]
-
-	for corner_idx in 4:
-		var quadrant_points: PackedVector2Array
-		var corner_geometry: PackedVector2Array
-		var curvature: float = corner_curvatures[corner_idx]
-
-		if _quadrant_cache.has(curvature):
-			quadrant_points = _quadrant_cache[curvature]
-		else:
-			quadrant_points = _superellipse_quadrant(curvature, corner_detail)
-			_quadrant_cache[curvature] = quadrant_points
-
-		var sign: int
-		if curvature > 0:
-			sign = 1
-		else:
-			sign = -1
-
-		quadrant_points = _transform_points(
-			quadrant_points,
-			transforms[corner_idx] * sign
-		)
-
-		if curvature > 0:
-			if corner_idx % 2 == 1:
-				quadrant_points.reverse()
-
-			for point in quadrant_points:
-				corner_geometry.append(point - transforms[corner_idx] * sign)
-		else:
-			if corner_idx % 2 == 0:
-				quadrant_points.reverse()
-			corner_geometry = quadrant_points
-		geometry_array.append(corner_geometry)
-
-	_corner_geometry = geometry_array
-
-
-func _get_rounded_rect(rect: Rect2, corner_radii: Vector4) -> PackedVector2Array:
-	var corners: PackedVector2Array = [
-		rect.position,
-		Vector2(rect.end.x, rect.position.y),
-		rect.end,
-		Vector2(rect.position.x, rect.end.y),
-	]
-
-	var points: PackedVector2Array
-	var size: int
-	for i in 4:
-		if corner_radii[i] == 0:
-			size += 1
-		else:
-			size += corner_detail + 1
-	points.resize(size)
-
-	var index: int
-
-	for corner_idx: int in 4:
-		if corner_radii[corner_idx] == 0:
-			points[index] = corners[corner_idx]
-			index += 1
-		else:
-			for point: Vector2 in _corner_geometry[corner_idx]:
-				points[index] = point * corner_radii[corner_idx] + corners[corner_idx]
-				index += 1
-	return points
-
 
 func _get_points_from_rect(rect: Rect2) -> PackedVector2Array:
 	return PackedVector2Array([
@@ -448,6 +362,49 @@ func _get_points_from_rect(rect: Rect2) -> PackedVector2Array:
 		rect.end,
 		Vector2(rect.position.x, rect.end.y)
 	])
+
+func _get_rounded_rect(rect: Rect2, corner_radii: Vector4, corner_curvatures: Vector4) -> PackedVector2Array:
+	var corners := _get_points_from_rect(rect)
+	var points: PackedVector2Array
+	for i in 4:
+		if corner_radii[i] == 0:
+			points.append(corners[i])
+		else:
+			for point in _get_superellipse_quadrant(i, corner_curvatures[i], corner_detail):
+				points.append(point * corner_radii[i] + corners[i])
+	return points
+
+
+#func _draw_ring2(
+	#to_canvas_item: RID,
+	#rect: Rect2,
+	#width: float):
+#
+	#var rect_to: Rect2 = rect.grow(-width)
+	#var border_corner_radius = corner_radius_top_left + width
+	#var theta = asin(width / border_corner_radius)
+	#var new_corner_radius = cos(theta) * border_corner_radius - width
+#
+	#var length = border_corner_radius - sqrt(2 * width ** 2)
+	#var new_corner_curvature = log(log(0.5) / log(length / (sqrt(2) * new_corner_radius))) / log(2)
+	#print(new_corner_curvature)
+#
+	#var points_from: PackedVector2Array = _get_rounded_rect(rect, Vector4.ONE * corner_radius_top_left)
+	#var points_to: PackedVector2Array = _get_rounded_rect(rect_to, Vector4.ONE * new_corner_radius)
+	#var indices: PackedInt32Array = _triangulate_ring(
+		#points_from.size(),
+		#points_to.size(),
+		#Vector4.ONE * corner_radius_top_left,
+		#Vector4.ONE * corner_radius_top_left
+	#)
+#
+	##_draw_debug_polygon(to_canvas_item, points_from)
+	#RenderingServer.canvas_item_add_triangle_array(
+		#to_canvas_item,
+		#indices,
+		#points_to + points_from,
+		#[Color.RED],
+	#)
 
 
 func _draw_ring(
@@ -505,7 +462,6 @@ func _draw_ring(
 		)
 	#DEBUG
 	#RenderingServer.canvas_item_add_polyline(to_canvas_item, all_points, [Color.GREEN_YELLOW])
-
 
 func _draw_rect(
 	to_canvas_item: RID,
@@ -577,6 +533,19 @@ func _draw_rect(
 			points,
 			[rect_color]
 		)
+
+
+
+func _draw_border2(
+	to_canvas_item: RID,
+	rect: Rect2,
+	border: StyleBorder,
+	corner_radii: Vector4
+):
+	var outer_rect: Rect2 = rect
+	var inner_rect: Rect2 = outer_rect.grow_individual(-border.width_left, -border.width_top, -border.width_right, -border.width_bottom)
+	#get_corner_geometry(0, corner_radii[0], corner_curvature_top_left)
+	get_corner_geometry(1, corner_radii[0], corner_curvature_top_left)
 
 
 func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_radius: Vector4) -> void:
@@ -1024,6 +993,14 @@ func get_corner_radius(corner: Corner) -> int:
 		CORNER_BOTTOM_RIGHT: return corner_radius_bottom_right
 		_: return 0
 
+func get_corner_radius_all() -> Vector4:
+	return Vector4(
+		corner_radius_top_left,
+		corner_radius_top_right,
+		corner_radius_bottom_right,
+		corner_radius_bottom_left,
+	)
+
 func get_corner_curvature(corner: Corner) -> float:
 	match corner:
 		CORNER_TOP_LEFT: return corner_curvature_top_left
@@ -1031,6 +1008,14 @@ func get_corner_curvature(corner: Corner) -> float:
 		CORNER_BOTTOM_LEFT: return corner_curvature_bottom_left
 		CORNER_BOTTOM_RIGHT: return corner_curvature_bottom_right
 		_: return 0
+
+func get_corner_curvature_all() -> Vector4:
+	return Vector4(
+		corner_curvature_top_left,
+		corner_curvature_top_right,
+		corner_curvature_bottom_right,
+		corner_curvature_bottom_left,
+	)
 
 func get_expand_margin(side: Side) -> float:
 	match side:
