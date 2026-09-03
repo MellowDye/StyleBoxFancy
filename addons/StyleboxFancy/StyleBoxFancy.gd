@@ -564,7 +564,7 @@ func _draw_rect(
 	var points: PackedVector2Array = _get_rounded_rect(center_rect, center_corner_radius)
 
 	if rect_texture != null:
-		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, texture, texture_stretch_mode, texture_scale)
+		var uvs: PackedVector2Array = _get_polygon_uv(points, rect, rect_texture, texture_stretch_mode, texture_scale)
 		RenderingServer.canvas_item_add_polygon(
 			to_canvas_item,
 			points,

@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dy2mu7siqsklv"]
+[gd_scene load_steps=6 format=3 uid="uid://dy2mu7siqsklv"]
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_4rx3t"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_wmrnq"]
-[ext_resource type="Texture2D" uid="uid://ds1a2dtd5mvjg" path="res://addons/StyleboxFancy/StyleBoxFancy.svg" id="3_wmrnq"]
+
+[sub_resource type="Gradient" id="Gradient_4rx3t"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wmrnq"]
+gradient = SubResource("Gradient_4rx3t")
 
 [sub_resource type="StyleBox" id="StyleBox_wmrnq"]
 resource_local_to_scene = false
@@ -16,15 +20,14 @@ color = Color(0.6, 0.6, 0.6, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_4rx3t")]([])
-texture = ExtResource("3_wmrnq")
 texture_stretch_mode = 0
 texture_repeat = 0
 texture_scale = 1.0
-corner_detail = 8
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
+corner_detail = 10
+corner_radius_top_left = 245
+corner_radius_top_right = 245
+corner_radius_bottom_right = 245
+corner_radius_bottom_left = 245
 corner_curvature_top_left = 1.0
 corner_curvature_top_right = 1.0
 corner_curvature_bottom_right = 1.0
@@ -33,11 +36,12 @@ expand_margin_left = 0.0
 expand_margin_top = 0.0
 expand_margin_right = 0.0
 expand_margin_bottom = 0.0
-shadow_enabled = false
-shadow_color = Color(0, 0, 0, 0.6)
-shadow_blur = 1
+shadow_enabled = true
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_texture = SubResource("GradientTexture1D_wmrnq")
+shadow_blur = 266
 shadow_offset = Vector2(0, 0)
-shadow_spread = Vector2(0, 0)
+shadow_spread = Vector2(52.26, 52.26)
 anti_aliasing = true
 anti_aliasing_size = 1.0
 
