@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="StyleboxFancy"
-config/features=PackedStringArray("4.7", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=120
 config/icon="uid://djmsx7jolhrqm"
 

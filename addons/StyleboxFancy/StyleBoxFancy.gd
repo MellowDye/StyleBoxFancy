@@ -150,6 +150,7 @@ var _corner_geometry: Array[PackedVector2Array]
 @export_range(1, 20, 1) var corner_detail: int = 8:
 	set(v):
 		corner_detail = v
+		_generate_corner_geometry()
 		emit_changed()
 
 # They are edited through the inspector plugin
