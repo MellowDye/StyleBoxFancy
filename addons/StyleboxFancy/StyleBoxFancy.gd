@@ -553,7 +553,7 @@ func _draw_rect(
 		)
 
 
-func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_radius: Vector4) -> void:
+func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_radius: Vector4, aa: float) -> void:
 	# NOTE: In StyleBoxFlat the border gives a margin to the corner radius so it doesn't
 	# overlap with itself, however it gives the border a different corner radius than the
 	# underlying center panel.
@@ -575,49 +575,49 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 			outer_rect,
 			border.color,
 			corner_radius,
-			anti_aliasing_size if anti_aliasing else 0.0,
+			aa,
 			border.texture,
 		)
 		return
 
 	# Adjustments for AA
-	if corner_radius and anti_aliasing:
-		var antialiasing_sides: Vector4 = Vector4(
-			anti_aliasing_size if border.width_left else 0.0,
-			anti_aliasing_size if border.width_top else 0.0,
-			anti_aliasing_size if border.width_right else 0.0,
-			anti_aliasing_size if border.width_bottom else 0.0,
+	if corner_radius and aa != 0:
+		var anti_aliasing_sides := Vector4(
+			aa if border.width_left else 0.0,
+			aa if border.width_top else 0.0,
+			aa if border.width_right else 0.0,
+			aa if border.width_bottom else 0.0,
 		)
 
 		outer_rect = outer_rect.grow_individual(
-			antialiasing_sides[0] * -0.5,
-			antialiasing_sides[1] * -0.5,
-			antialiasing_sides[2] * -0.5,
-			antialiasing_sides[3] * -0.5,
+			anti_aliasing_sides[0] * -0.5,
+			anti_aliasing_sides[1] * -0.5,
+			anti_aliasing_sides[2] * -0.5,
+			anti_aliasing_sides[3] * -0.5,
 		)
 
 		if not border.blend:
 			inner_rect = inner_rect.grow_individual(
-				antialiasing_sides[0] * 0.5,
-				antialiasing_sides[1] * 0.5,
-				antialiasing_sides[2] * 0.5,
-				antialiasing_sides[3] * 0.5,
+				anti_aliasing_sides[0] * 0.5,
+				anti_aliasing_sides[1] * 0.5,
+				anti_aliasing_sides[2] * 0.5,
+				anti_aliasing_sides[3] * 0.5,
 			)
 
-		fill_corner_radius = _adjust_corner_radius(fill_corner_radius, antialiasing_sides * 0.5)
+		fill_corner_radius = _adjust_corner_radius(fill_corner_radius, anti_aliasing_sides * 0.5)
 
 		var feather_outer_rect: Rect2 = outer_rect.grow_individual(
-			antialiasing_sides[0],
-			antialiasing_sides[1],
-			antialiasing_sides[2],
-			antialiasing_sides[3],
+			anti_aliasing_sides[0],
+			anti_aliasing_sides[1],
+			anti_aliasing_sides[2],
+			anti_aliasing_sides[3],
 		)
 
 		var feather_inner_rect: Rect2 = inner_rect.grow_individual(
-			-antialiasing_sides[0],
-			-antialiasing_sides[1],
-			-antialiasing_sides[2],
-			-antialiasing_sides[3],
+			-anti_aliasing_sides[0],
+			-anti_aliasing_sides[1],
+			-anti_aliasing_sides[2],
+			-anti_aliasing_sides[3],
 		)
 
 		# Outer aa
@@ -625,7 +625,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 			to_canvas_item,
 			outer_rect,
 			feather_outer_rect,
-			_adjust_corner_radius(fill_corner_radius, antialiasing_sides, true),
+			_adjust_corner_radius(fill_corner_radius, anti_aliasing_sides, true),
 			border.color,
 			border.texture,
 			rect,
@@ -638,7 +638,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 				to_canvas_item,
 				feather_inner_rect,
 				inner_rect,
-				_adjust_corner_radius(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - antialiasing_sides),
+				_adjust_corner_radius(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - anti_aliasing_sides),
 				border.color,
 				border.texture,
 				rect,
@@ -910,6 +910,22 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	if material:
 		RenderingServer.canvas_item_set_material(to_canvas_item, material)
 
+	# Anti aliasing scale factor
+	# Adapted from < 4.5 Godot StyleBoxFlat code
+	var aa_size_scaled: float
+	if anti_aliasing:
+		var scale_factor: float = 1
+
+		var tree: MainLoop = Engine.get_main_loop()
+		if tree:
+			var window: Window = tree.root
+			var stretch_scale: Vector2 = window.get_stretch_transform().get_scale()
+			scale_factor = minf(stretch_scale.x, stretch_scale.y)
+
+		aa_size_scaled = anti_aliasing_size / scale_factor
+	else:
+		aa_size_scaled = 0
+
 
 	if shadow_enabled:
 		var shadow_rect: Rect2 = rect.grow(shadow_blur * 0.5)
@@ -940,7 +956,7 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 			rect,
 			color,
 			corner_radii,
-			anti_aliasing_size if anti_aliasing else 0.0,
+			aa_size_scaled,
 			texture,
 			texture_stretch_mode,
 			texture_scale
@@ -958,8 +974,8 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 					to_canvas_item,
 					rect,
 					border,
-					corner_radii
-
+					corner_radii,
+					aa_size_scaled
 				)
 				continue
 
@@ -967,7 +983,8 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 				to_canvas_item,
 				border_rect,
 				border,
-				border_corner_radii
+				border_corner_radii,
+				aa_size_scaled
 			)
 
 			# Adjust parameters for the next border
