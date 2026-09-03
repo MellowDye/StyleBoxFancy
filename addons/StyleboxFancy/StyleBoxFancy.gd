@@ -493,7 +493,7 @@ func _draw_rect(
 	force_aa: bool = false) -> void:
 
 	# Simple rect check
-	if not corner_radius and not force_aa and false:
+	if not corner_radius and not force_aa:
 		if not rect_texture:
 			RenderingServer.canvas_item_add_rect(to_canvas_item, rect, rect_color)
 			return
@@ -507,7 +507,7 @@ func _draw_rect(
 	var center_corner_radius: Vector4 = _fit_corner_radius_in_rect(corner_radius, center_rect)
 
 	# Anti aliasing
-	if aa != 0 and corner_radius:
+	if aa != 0:
 		var inner_rect: Rect2 = rect.grow(-aa * 0.5)
 		# NOTE: Godot will report an error in rect.expand when its size is negative
 		# but will work anyways :/
