@@ -331,24 +331,36 @@ func _property_get_revert(property: StringName) -> Variant:
 #endregion
 
 #region Draw
-func _superellipse_quadrant(exponent: float, detail: int) -> PackedVector2Array:
-	var n: float = pow(2, abs(exponent))
+# Quadrant starts at top left corner and continues clockwise
+func _get_superellipse_quadrant(quadrant: int, exponent: float, detail: int) -> PackedVector2Array:
+	const HALF_PI = PI * 0.5
+	var rotation_quadrant := PI + HALF_PI * quadrant
+
+	var n := pow(2, abs(exponent))
 	var points: PackedVector2Array
 	points.resize(detail + 1)
 
-	points[0] = Vector2(1, 0)
-	points[-1] = Vector2(0, 1)
+	points[0] = Vector2(0, -1).rotated(rotation_quadrant)
+	points[-1] = Vector2(-1, 0).rotated(rotation_quadrant)
 
-	const HALF_PI: float = PI * 0.5
-	for i: int in range(1, detail):
-		var theta: float = HALF_PI * i / detail
+	for i in range(1, detail):
+		var theta := HALF_PI * i / detail
+		var point: Vector2
 
-		var cx: float = cos(theta)
-		var cy: float = sin(theta)
+		if exponent >= 0:
+			point = Vector2(
+				pow(cos(theta), 2 / n),
+				pow(sin(theta), 2 / n),
+			)
+		else:
+			# Use inverse ease of the trig funcs for the quadrant
+			point = Vector2(
+				1 - pow(sin(theta), 2 / n),
+				1 - pow(cos(theta), 2 / n),
+			)
 
-		var x: float = pow(cx, 2.0 / n)
-		var y: float = pow(cy, 2.0 / n)
-		points[i] = Vector2(x, y)
+		# The points origin must be the corner of the rect
+		points[i] = (point - Vector2.ONE).rotated(rotation_quadrant)
 	return points
 
 func _transform_points(points: PackedVector2Array, transform_vector: Vector2) -> PackedVector2Array:
@@ -365,51 +377,12 @@ func _generate_corner_geometry() -> void:
 		corner_curvature_bottom_left,
 	)
 
-	var transforms: PackedVector2Array = [
-		Vector2(-1, -1),
-		Vector2(1, -1),
-		Vector2(1, 1),
-		Vector2(-1, 1),
-	]
+	var geometry: Array[PackedVector2Array]
+	geometry.resize(4)
+	for i in 4:
+		geometry[i] = _get_superellipse_quadrant(i, corner_curvatures[i], corner_detail)
 
-	var _quadrant_cache: Dictionary[float, PackedVector2Array]
-	var geometry_array: Array[PackedVector2Array]
-
-	for corner_idx in 4:
-		var quadrant_points: PackedVector2Array
-		var corner_geometry: PackedVector2Array
-		var curvature: float = corner_curvatures[corner_idx]
-
-		if _quadrant_cache.has(curvature):
-			quadrant_points = _quadrant_cache[curvature]
-		else:
-			quadrant_points = _superellipse_quadrant(curvature, corner_detail)
-			_quadrant_cache[curvature] = quadrant_points
-
-		var sign: int
-		if curvature > 0:
-			sign = 1
-		else:
-			sign = -1
-
-		quadrant_points = _transform_points(
-			quadrant_points,
-			transforms[corner_idx] * sign
-		)
-
-		if curvature > 0:
-			if corner_idx % 2 == 1:
-				quadrant_points.reverse()
-
-			for point in quadrant_points:
-				corner_geometry.append(point - transforms[corner_idx] * sign)
-		else:
-			if corner_idx % 2 == 0:
-				quadrant_points.reverse()
-			corner_geometry = quadrant_points
-		geometry_array.append(corner_geometry)
-
-	_corner_geometry = geometry_array
+	_corner_geometry = geometry
 
 
 func _get_rounded_rect(rect: Rect2, corner_radii: Vector4) -> PackedVector2Array:
