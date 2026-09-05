@@ -440,7 +440,7 @@ func _draw_ring(
 	if inner_rect.abs().encloses(outer_rect):
 		return
 
-	var inner_corner_radius : Vector4 = _adjust_corner_radius(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
+	var inner_corner_radius : Vector4 = _shrink_corner_radii(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
 
 	var inner_points: PackedVector2Array = _get_rounded_rect(inner_rect, inner_corner_radius)
 	var outer_points: PackedVector2Array = _get_rounded_rect(outer_rect, corner_radius)
@@ -514,7 +514,7 @@ func _draw_rect(
 		inner_rect = inner_rect.expand(inner_rect.abs().get_center())
 		var outer_rect: Rect2 = rect.grow(aa * 0.5)
 		var inner_corner_radius: Vector4 = _fit_corner_radius_in_rect(corner_radius, inner_rect)
-		var ring_corner_radius: Vector4 = _adjust_corner_radius(inner_corner_radius, _get_sides_width_from_rects(outer_rect, inner_rect))
+		var ring_corner_radius: Vector4 = _shrink_corner_radii(inner_corner_radius, _get_sides_width_from_rects(outer_rect, inner_rect))
 
 		_draw_ring(
 			to_canvas_item,
@@ -604,7 +604,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 				anti_aliasing_sides[3] * 0.5,
 			)
 
-		fill_corner_radius = _adjust_corner_radius(fill_corner_radius, anti_aliasing_sides * 0.5)
+		fill_corner_radius = _shrink_corner_radii(fill_corner_radius, anti_aliasing_sides * 0.5)
 
 		var feather_outer_rect: Rect2 = outer_rect.grow_individual(
 			anti_aliasing_sides[0],
@@ -625,7 +625,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 			to_canvas_item,
 			outer_rect,
 			feather_outer_rect,
-			_adjust_corner_radius(fill_corner_radius, anti_aliasing_sides, true),
+			_grow_corner_radii(fill_corner_radius, anti_aliasing_sides),
 			border.color,
 			border.texture,
 			rect,
@@ -638,7 +638,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 				to_canvas_item,
 				feather_inner_rect,
 				inner_rect,
-				_adjust_corner_radius(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - anti_aliasing_sides),
+				_shrink_corner_radii(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - anti_aliasing_sides),
 				border.color,
 				border.texture,
 				rect,
@@ -750,24 +750,25 @@ func _get_sides_width_from_rects(inner_rect: Rect2, outer_rect: Rect2) -> Vector
 		outer_rect.end.y - inner_rect.end.y
 	)
 
+# Grows the corner radii of a outer rect using the distance of the sides of a inner rect
+func _grow_corner_radii(corner_radii: Vector4, sides_width: Vector4) -> Vector4:
+	return Vector4(
+		corner_radii[0] + min(sides_width[0], sides_width[1]) * sqrt(pow(2, corner_curvature_top_left - 1)),
+		corner_radii[1] + min(sides_width[1], sides_width[2]) * sqrt(pow(2, corner_curvature_top_right - 1)),
+		corner_radii[2] + min(sides_width[2], sides_width[3]) * sqrt(pow(2, corner_curvature_bottom_right - 1)),
+		corner_radii[3] + min(sides_width[3], sides_width[0]) * sqrt(pow(2, corner_curvature_bottom_left - 1))
+	).maxf(0)
 
-func _adjust_corner_radius(corner_radius: Vector4, sides_width: Vector4, grow: bool = false) -> Vector4:
-	if grow:
-		# Only used by the antialiasing calc in _draw_boder outer ring to avoid
-		# an overlap when a border side width is 0
-		return Vector4(
-			corner_radius[0] + min(sides_width[0], sides_width[1]) * sqrt(pow(2, corner_curvature_top_left - 1)),
-			corner_radius[1] + min(sides_width[1], sides_width[2]) * sqrt(pow(2, corner_curvature_top_right - 1)),
-			corner_radius[2] + min(sides_width[2], sides_width[3]) * sqrt(pow(2, corner_curvature_bottom_right - 1)),
-			corner_radius[3] + min(sides_width[3], sides_width[0]) * sqrt(pow(2, corner_curvature_bottom_left - 1))
-		)
-	else:
-		return Vector4(
-			max(0, corner_radius[0] - min(sides_width[0], sides_width[1]) * sqrt(pow(2, corner_curvature_top_left - 1))),
-			max(0, corner_radius[1] - min(sides_width[1], sides_width[2]) * sqrt(pow(2, corner_curvature_top_right - 1))),
-			max(0, corner_radius[2] - min(sides_width[2], sides_width[3]) * sqrt(pow(2, corner_curvature_bottom_right - 1))),
-			max(0, corner_radius[3] - min(sides_width[3], sides_width[0]) * sqrt(pow(2, corner_curvature_bottom_left - 1)))
-		)
+# Shrinks the corner radii of a inner rect using the distance of the sides of a outer rect,
+# the sides are clamped in 0 to avoid negative values if the previous statement isnt true, like for example
+# in some anti-aliasing cases
+func _shrink_corner_radii(corner_radii: Vector4, sides_width: Vector4) -> Vector4:
+	return Vector4(
+		corner_radii[0] - maxf(minf(sides_width[0], sides_width[1]), 0) * sqrt(pow(2, corner_curvature_top_left - 1)),
+		corner_radii[1] - maxf(minf(sides_width[1], sides_width[2]), 0) * sqrt(pow(2, corner_curvature_top_right - 1)),
+		corner_radii[2] - maxf(minf(sides_width[2], sides_width[3]), 0) * sqrt(pow(2, corner_curvature_bottom_right - 1)),
+		corner_radii[3] - maxf(minf(sides_width[3], sides_width[0]), 0) * sqrt(pow(2, corner_curvature_bottom_left - 1))
+	).maxf(0)
 
 func _get_polygon_uv(
 	polygon: PackedVector2Array,
@@ -988,7 +989,7 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 			)
 
 			# Adjust parameters for the next border
-			border_corner_radii = _adjust_corner_radius(border_corner_radii, Vector4(
+			border_corner_radii = _shrink_corner_radii(border_corner_radii, Vector4(
 				border.width_left,
 				border.width_top,
 				border.width_right,
