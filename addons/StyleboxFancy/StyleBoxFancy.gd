@@ -440,7 +440,9 @@ func _draw_ring(
 	if inner_rect.abs().encloses(outer_rect):
 		return
 
-	var inner_corner_radius : Vector4 = _shrink_corner_radii(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
+	var inner_corner_radius: Vector4 = _shrink_corner_radii(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
+	#inner_corner_radius = _fit_corner_radius_in_rect(inner_corner_radius, inner_rect)
+	corner_radius = _fit_corner_radius_in_rect(corner_radius, outer_rect)
 
 	var inner_points: PackedVector2Array = _get_rounded_rect(inner_rect, inner_corner_radius)
 	var outer_points: PackedVector2Array = _get_rounded_rect(outer_rect, corner_radius)
@@ -481,6 +483,7 @@ func _draw_ring(
 	#RenderingServer.canvas_item_add_polyline(to_canvas_item, all_points, [Color.GREEN_YELLOW])
 
 
+
 func _draw_rect(
 	to_canvas_item: RID,
 	rect: Rect2,
@@ -512,15 +515,16 @@ func _draw_rect(
 		# NOTE: Godot will report an error in rect.expand when its size is negative
 		# but will work anyways :/
 		inner_rect = inner_rect.expand(inner_rect.abs().get_center())
+
 		var outer_rect: Rect2 = rect.grow(aa * 0.5)
 		var inner_corner_radius: Vector4 = _fit_corner_radius_in_rect(corner_radius, inner_rect)
-		var ring_corner_radius: Vector4 = _shrink_corner_radii(inner_corner_radius, _get_sides_width_from_rects(outer_rect, inner_rect))
+		var outer_corner_radius: Vector4 = _grow_corner_radii(inner_corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
 
 		_draw_ring(
 			to_canvas_item,
 			inner_rect,
 			outer_rect,
-			ring_corner_radius,
+			outer_corner_radius,
 			rect_color,
 			rect_texture,
 			rect,
@@ -552,7 +556,6 @@ func _draw_rect(
 			[rect_color]
 		)
 
-
 func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_radius: Vector4, aa: float) -> void:
 	# NOTE: In StyleBoxFlat the border gives a margin to the corner radius so it doesn't
 	# overlap with itself, however it gives the border a different corner radius than the
@@ -580,7 +583,7 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 		)
 		return
 
-	# Adjustments for AA
+	# Anti-aliasing
 	if corner_radius and aa != 0:
 		var anti_aliasing_sides := Vector4(
 			aa if border.width_left else 0.0,
@@ -596,15 +599,6 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 			anti_aliasing_sides[3] * -0.5,
 		)
 
-		if not border.blend:
-			inner_rect = inner_rect.grow_individual(
-				anti_aliasing_sides[0] * 0.5,
-				anti_aliasing_sides[1] * 0.5,
-				anti_aliasing_sides[2] * 0.5,
-				anti_aliasing_sides[3] * 0.5,
-			)
-
-		fill_corner_radius = _shrink_corner_radii(fill_corner_radius, anti_aliasing_sides * 0.5)
 
 		var feather_outer_rect: Rect2 = outer_rect.grow_individual(
 			anti_aliasing_sides[0],
@@ -613,19 +607,16 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 			anti_aliasing_sides[3],
 		)
 
-		var feather_inner_rect: Rect2 = inner_rect.grow_individual(
-			-anti_aliasing_sides[0],
-			-anti_aliasing_sides[1],
-			-anti_aliasing_sides[2],
-			-anti_aliasing_sides[3],
-		)
+		fill_corner_radius = _shrink_corner_radii(fill_corner_radius, anti_aliasing_sides * 0.5)
+		fill_corner_radius = _fit_corner_radius_in_rect(fill_corner_radius, outer_rect)
+		var outer_corner_radius = _grow_corner_radii(fill_corner_radius, anti_aliasing_sides)
 
 		# Outer aa
 		_draw_ring(
 			to_canvas_item,
 			outer_rect,
 			feather_outer_rect,
-			_grow_corner_radii(fill_corner_radius, anti_aliasing_sides),
+			outer_corner_radius,
 			border.color,
 			border.texture,
 			rect,
@@ -634,17 +625,36 @@ func _draw_border(to_canvas_item: RID, rect: Rect2, border: StyleBorder, corner_
 
 		# Inner aa
 		if not border.blend:
+			inner_rect = inner_rect.grow_individual(
+				anti_aliasing_sides[0] * 0.5,
+				anti_aliasing_sides[1] * 0.5,
+				anti_aliasing_sides[2] * 0.5,
+				anti_aliasing_sides[3] * 0.5,
+			)
+
+			var feather_inner_rect: Rect2 = inner_rect.grow_individual(
+				-anti_aliasing_sides[0],
+				-anti_aliasing_sides[1],
+				-anti_aliasing_sides[2],
+				-anti_aliasing_sides[3],
+			)
+
+			var inner_corner_radius = _shrink_corner_radii(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - anti_aliasing_sides)
+
+			# Inner aa
 			_draw_ring(
 				to_canvas_item,
 				feather_inner_rect,
 				inner_rect,
-				_shrink_corner_radii(fill_corner_radius, _get_sides_width_from_rects(feather_inner_rect, outer_rect) - anti_aliasing_sides),
+				inner_corner_radius,
 				border.color,
 				border.texture,
 				rect,
 				true,
 				true
 			)
+
+	inner_rect = _clamp_rect(inner_rect)
 
 	# Border
 	_draw_ring(
@@ -867,6 +877,17 @@ func _fit_corner_radius_in_rect(corners: Vector4, rect: Rect2) -> Vector4:
 	return adjusted
 
 
+func _clamp_rect(rect: Rect2) -> Rect2:
+	var clamped_rect = rect.abs()
+	if rect.size.x < 0:
+		clamped_rect = clamped_rect.grow_side(SIDE_LEFT, rect.size.x / 2.0)
+		clamped_rect = clamped_rect.grow_side(SIDE_RIGHT, rect.size.x / 2.0)
+	if rect.size.y < 0:
+		clamped_rect = clamped_rect.grow_side(SIDE_TOP, rect.size.y / 2.0)
+		clamped_rect = clamped_rect.grow_side(SIDE_BOTTOM, rect.size.y / 2.0)
+	return clamped_rect
+
+
 func _draw_debug_rect(to_canvas_item, rect) -> void:
 	var points : PackedVector2Array = _get_points_from_rect(rect)
 	RenderingServer.canvas_item_add_polyline(to_canvas_item, points, [Color.AQUA])
@@ -965,7 +986,7 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 
 	if borders:
 		var border_rect: Rect2 = rect
-		var border_corner_radii: Vector4 = corner_radii
+		var border_corner_radii: Vector4 = _fit_corner_radius_in_rect(corner_radii, rect)
 
 		for border: StyleBorder in borders:
 			if border == null: continue

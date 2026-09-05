@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://3hoyv2pwgaop"]
+[gd_scene load_steps=40 format=3 uid="uid://3hoyv2pwgaop"]
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_1cpl6"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_0g455"]
@@ -56,6 +56,9 @@ color = Color(0.247059, 0.207843, 0.25098, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_20hsm"), SubResource("Resource_634l0")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 6
 corner_radius_top_left = 500
 corner_radius_top_right = 500
@@ -90,6 +93,9 @@ color = Color(0.247059, 0.207843, 0.25098, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_634l0")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 6
 corner_radius_top_left = 500
 corner_radius_top_right = 500
@@ -141,10 +147,13 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("2_0g455")
 color = Color(0, 0, 0, 1)
-texture = SubResource("GradientTexture1D_0g455")
 draw_center = false
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_1cpl6")])
+texture = SubResource("GradientTexture1D_0g455")
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 6
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -224,6 +233,9 @@ color = Color(0, 0, 0, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_s8xp3"), SubResource("Resource_kcooe"), SubResource("Resource_ejor4")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 6
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -273,6 +285,9 @@ color = Color(0, 0, 0, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_0g455")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 6
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -322,6 +337,9 @@ color = Color(0, 0, 0, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_0bx7h")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 45
 corner_radius_top_right = 45
@@ -356,6 +374,9 @@ color = Color(1, 0.210127, 0.705323, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 0
 corner_radius_top_right = 0
@@ -380,7 +401,7 @@ metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [sub_resource type="Resource" id="Resource_ejp8g"]
 script = ExtResource("1_1cpl6")
-color = Color(0.800151, 0.800151, 0.800151, 0.419608)
+color = Color(0.8, 0, 0, 0.419608)
 blend = false
 ignore_stack = false
 width_left = 0
@@ -405,6 +426,9 @@ color = Color(0.6, 0.6, 0.6, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_ejp8g")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 50
 corner_radius_top_right = 0
@@ -471,6 +495,9 @@ color = Color(0, 0, 0, 1)
 draw_center = false
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_y7dmn")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 145
 corner_radius_top_right = 0
@@ -535,6 +562,9 @@ color = Color(0, 0, 0, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_3wer6"), SubResource("Resource_f7idn")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -614,6 +644,9 @@ color = Color(0.6, 0.6, 0.6, 1)
 draw_center = true
 skew = Vector2(0, 0)
 borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_erq7f"), SubResource("Resource_yp3xt"), SubResource("Resource_c6f8i")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 0
 corner_radius_top_right = 20
@@ -636,6 +669,88 @@ anti_aliasing = true
 anti_aliasing_size = 1.0
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
+[sub_resource type="Resource" id="Resource_s3jv5"]
+script = ExtResource("1_1cpl6")
+color = Color(0.920995, 0.920995, 0.920995, 1)
+blend = true
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="Resource" id="Resource_4kjmi"]
+script = ExtResource("1_1cpl6")
+color = Color(0.835254, 4.33177e-07, 0.441206, 1)
+blend = false
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="Resource" id="Resource_8bxvm"]
+script = ExtResource("1_1cpl6")
+color = Color(0.920995, 0.920995, 0.920995, 1)
+blend = true
+ignore_stack = false
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+inset_left = 0
+inset_top = 0
+inset_right = 0
+inset_bottom = 0
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="StyleBox" id="StyleBox_yp3xt"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 48.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("2_0g455")
+color = Color(0.6, 0.6, 0.6, 1)
+draw_center = false
+skew = Vector2(0, 0)
+borders = Array[ExtResource("1_1cpl6")]([SubResource("Resource_s3jv5"), SubResource("Resource_4kjmi"), SubResource("Resource_8bxvm")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
+corner_detail = 8
+corner_radius_top_left = 95
+corner_radius_top_right = 120
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
+corner_curvature_top_left = -1.0
+corner_curvature_top_right = -1.0
+corner_curvature_bottom_right = -1.0
+corner_curvature_bottom_left = -1.0
+expand_margin_left = 0.0
+expand_margin_top = 0.0
+expand_margin_right = 0.0
+expand_margin_bottom = 0.0
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_blur = 41
+shadow_offset = Vector2(0, 0)
+shadow_spread = Vector2(0, 0)
+anti_aliasing = true
+anti_aliasing_size = 1.0
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
 [node name="Tests" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -645,6 +760,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 metadata/_edit_horizontal_guides_ = [245.0]
+metadata/_edit_vertical_guides_ = [826.0]
 
 [node name="Shadow with border" type="Panel" parent="."]
 layout_mode = 0
@@ -676,7 +792,7 @@ layout_mode = 0
 offset_left = 734.0
 offset_top = 135.0
 offset_right = 871.0
-offset_bottom = 225.0
+offset_bottom = 244.0
 theme_override_styles/panel = SubResource("StyleBox_ejor4")
 
 [node name="Panel4" type="Panel" parent="."]
@@ -707,8 +823,8 @@ theme_override_styles/panel = SubResource("StyleBox_0bx7h")
 layout_mode = 0
 offset_left = 655.0
 offset_top = 57.0
-offset_right = 698.0
-offset_bottom = 97.0
+offset_right = 715.0
+offset_bottom = 147.0
 theme_override_styles/panel = SubResource("StyleBox_3wer6")
 
 [node name="CORNER flat" type="Panel" parent="."]
@@ -723,8 +839,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f7idn")
 layout_mode = 0
 offset_left = 432.0
 offset_top = 133.0
-offset_right = 513.0
-offset_bottom = 210.0
+offset_right = 504.0
+offset_bottom = 225.0
 theme_override_styles/panel = SubResource("StyleBox_erq7f")
 
 [node name="Panel6" type="Panel" parent="."]
@@ -753,3 +869,11 @@ offset_top = 353.0
 offset_right = 171.0
 offset_bottom = 489.0
 theme_override_styles/panel = SubResource("StyleBox_s3jv5")
+
+[node name="Layered borders2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 351.0
+offset_right = 361.0
+offset_bottom = 400.0
+theme_override_styles/panel = SubResource("StyleBox_yp3xt")
