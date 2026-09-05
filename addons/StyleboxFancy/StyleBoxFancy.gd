@@ -441,7 +441,10 @@ func _draw_ring(
 		return
 
 	var inner_corner_radius: Vector4 = _shrink_corner_radii(corner_radius, _get_sides_width_from_rects(inner_rect, outer_rect))
-	#inner_corner_radius = _fit_corner_radius_in_rect(inner_corner_radius, inner_rect)
+	# TODO: Someday implement a better ring geometry generator to avoid the width shrinking on
+	# corner curvatures < 0
+	inner_corner_radius = _fit_corner_radius_in_rect(inner_corner_radius, inner_rect)
+
 	corner_radius = _fit_corner_radius_in_rect(corner_radius, outer_rect)
 
 	var inner_points: PackedVector2Array = _get_rounded_rect(inner_rect, inner_corner_radius)

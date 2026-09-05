@@ -1,17 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy2mu7siqsklv"]
+[gd_scene load_steps=7 format=3 uid="uid://dy2mu7siqsklv"]
 
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_4rx3t"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_wmrnq"]
 
 [sub_resource type="Resource" id="Resource_4rx3t"]
 script = ExtResource("1_4rx3t")
-color = Color(1, 1, 1, 0.376471)
+color = Color(1, 1, 1, 1)
 blend = false
 ignore_stack = false
 width_left = 10
 width_top = 10
 width_right = 10
-width_bottom = 10
+width_bottom = 0
 inset_left = 0
 inset_top = 0
 inset_right = 0
@@ -20,8 +20,8 @@ metadata/_custom_type_script = "uid://cjmmhbp1b5312"
 
 [sub_resource type="Resource" id="Resource_wmrnq"]
 script = ExtResource("1_4rx3t")
-color = Color(1, 0, 0, 0)
-blend = false
+color = Color(1, 0, 0, 0.34902)
+blend = true
 ignore_stack = false
 width_left = 10
 width_top = 10
@@ -42,19 +42,55 @@ content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("2_wmrnq")
 color = Color(0.6, 0.6, 0.6, 1)
-draw_center = false
+draw_center = true
 skew = Vector2(0, 0)
-borders = Array[ExtResource("1_4rx3t")]([SubResource("Resource_4rx3t"), SubResource("Resource_wmrnq")])
+borders = Array[ExtResource("1_4rx3t")]([SubResource("Resource_4rx3t"), SubResource("Resource_wmrnq"), SubResource("Resource_4rx3t")])
 texture_stretch_mode = 0
 texture_repeat = 0
 texture_scale = 1.0
 corner_detail = 8
 corner_radius_top_left = 150
 corner_radius_top_right = 150
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+corner_curvature_top_left = 1.5
+corner_curvature_top_right = 1.5
+corner_curvature_bottom_right = 1.5
+corner_curvature_bottom_left = -1.0
+expand_margin_left = 0.0
+expand_margin_top = 0.0
+expand_margin_right = 0.0
+expand_margin_bottom = 0.0
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_blur = 20
+shadow_offset = Vector2(0, 0)
+shadow_spread = Vector2(0, 0)
+anti_aliasing = true
+anti_aliasing_size = 1.0
+
+[sub_resource type="StyleBox" id="StyleBox_4rx3t"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("2_wmrnq")
+color = Color(0.6, 0.6, 0.6, 1)
+draw_center = true
+skew = Vector2(0, 0)
+borders = Array[ExtResource("1_4rx3t")]([SubResource("Resource_4rx3t"), SubResource("Resource_wmrnq"), SubResource("Resource_4rx3t")])
+texture_stretch_mode = 0
+texture_repeat = 0
+texture_scale = 1.0
+corner_detail = 8
+corner_radius_top_left = 25
+corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 corner_curvature_top_left = -1.0
-corner_curvature_top_right = -1.0
+corner_curvature_top_right = 0.0
 corner_curvature_bottom_right = -1.0
 corner_curvature_bottom_left = -1.0
 expand_margin_left = 0.0
@@ -82,6 +118,14 @@ metadata/_edit_horizontal_guides_ = [30.0]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-offset_right = 519.0
-offset_bottom = 365.0
+offset_right = 196.0
+offset_bottom = 101.0
 theme_override_styles/panel = SubResource("StyleBox_wmrnq")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+offset_left = 270.0
+offset_top = 5.0
+offset_right = 425.0
+offset_bottom = 117.0
+theme_override_styles/panel = SubResource("StyleBox_4rx3t")
