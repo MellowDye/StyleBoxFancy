@@ -10,7 +10,7 @@ class_name StyleBoxFancy
 ## [b]Curvature presets[/b] [br][br]
 ## [b]Round:[/b] Default value, makes a normal circle. [br][br]
 ## [b]Squircle:[/b] Intermediate shape between a square and a circle. Needs a
-## higher corner radius to visually compensate comparated to a round corner. [br][br]
+## higher corner radius to visually compensate compared to a round corner. [br][br]
 ## [b]Bevel:[/b] Makes the corner a straight line, it acts the same as if
 ## [member corner_detail] value were 1. [br][br]
 ## [b]Scoop:[/b] The inverse of a round corner. [br][br]
@@ -95,7 +95,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## UVs to work, otherwise they will all be set to (0, 0). Also UVs are affected by
 ## [member texture_stretch_mode] and [member texture_scale]. [br][br]
 ##
-## Removing a material will also not inmediately update all nodes using it, reload
+## Removing a material will also not immediately update all nodes using it, reload
 ## the scenes using them to update them.
 @export var material: Material:
 	set(v):
@@ -124,7 +124,7 @@ var _corner_geometry: Array[PackedVector2Array]
 ## [CanvasItem] texture_repeat property. [br] [br]
 ##
 ## [b]Note:[/b] When setting back to Inherit from another mode, it might not
-## update inmediately, in that case you need to set again the [CanvasItem]
+## update immediately, in that case you need to set again the [CanvasItem]
 ## texture_repeat property. [br] [br]
 ##
 ## [b]Note 2:[/b] The editor stylebox preview will absolutely ignore this property
@@ -678,7 +678,7 @@ func _triangulate_ring(outer_size: int, inner_size: int, outer_corner_radii: Vec
 	# It always has a minimum of 8
 	var triangles: int = 8
 	for corner_idx in 4:
-		# If the inner corner is round you can asume the outer is too
+		# If the inner corner is round you can assume the outer is too
 		if inner_corner_radii[corner_idx] != 0:
 			triangles += corner_detail * 2
 		# If not, if the outer corner is round it connects its triangles to the same point

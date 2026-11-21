@@ -14,7 +14,7 @@ There were several occasions where I wanted to create panel designs that sounded
 * Apply materials (shaders) [EXPERIMENTAL]
 
 
-# Requierements
+# Requirements
 The minimum Godot version required is 4.4
 
 # Installation
@@ -66,7 +66,7 @@ Controls the behavior of the texture when resizing the StyleBox, similar to a `T
 Sets the repeating mode that the texture will use, this overrides the entire `CanvasItem` `texture_repeat` property, if set to `inherit` then it will use the mode that `CanvasItem`.> 
 
 > [!NOTE]
-> When setting back to Inherit from another mode, it might not update inmediately, in that case you need to set again the `CanvasItem` `texture_repeat` property.
+> When setting back to Inherit from another mode, it might not update immediately, in that case you need to set again the `CanvasItem` `texture_repeat` property.
 >
 > The editor stylebox preview will absolutely ignore this property and may appear different from the 2D scene.
 
@@ -82,7 +82,7 @@ Overrides the `CanvasItem` material that uses this StyleBox. It accept `CanvasIt
 > [!IMPORTANT]
 > A texture MUST be set for both the background and borders for the UVs to work, otherwise they will all be set to (0, 0). Also UVs are affected by `texture_stretch_mode` and `texture_scale`.
 >
-> Removing a material will also not inmediately update all nodes using it, reload the scenes using them to update them.
+> Removing a material will also not immediately update all nodes using it, reload the scenes using them to update them.
 
 ## Corners
 
