@@ -38,7 +38,7 @@ const CORNER_STRINGNAMES: Array[StringName] = [
 
 static var linked_corners: bool = true
 
-# NOTE: Accidentaly managed to instance a EditorSpinSlider inside the scene
+# NOTE: Accidentally managed to instance a EditorSpinSlider inside the scene
 # so I don't need to generate them anymore, but I'll leave this just in case
 # it breaks
 func _get_radius_spinbox() -> EditorSpinSlider:
